@@ -1,0 +1,32 @@
+.root {
+  margin: 20px auto;
+}
+
+.root .title {
+  line-height: 40px;
+  border-bottom: 1px solid #eee;
+  color: rgb(17, 157, 85);
+  font-weight: bold;
+  position: relative;
+  margin-bottom: 10px;
+  font-size: 20.8px;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.root .title:after {
+  position: absolute;
+  width: 90px;
+  height: 2px;
+  content: "";
+  background: rgb(245, 0, 87);
+  left: 0;
+  bottom: 0;
+  transition: all 0.5s ease;
+}
+
+.root .title:hover:after {
+  width: 120px;
+}

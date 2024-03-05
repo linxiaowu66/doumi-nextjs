@@ -1,0 +1,59 @@
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  position: fixed;
+  top: 20%;
+  left: 0%;
+}
+
+@media screen and (max-width: 992px) {
+  .root {
+    display: none;
+  }
+}
+
+.root > * {
+  margin: 8px;
+  padding: 9px 0px;
+  width: 240px;
+  height: 256px;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: bolder;
+  color: #119d55;
+  padding: 5px 0px 5px 5px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.small {
+  width: 24px;
+  height: 24px;
+  /*TODO 颜色是浅的，需要改下*/
+  color: #119d55;
+  background-color: #fff;
+}
+
+.value {
+  color: #000;
+  width: 40px;
+  height: 24px;
+  background: #e5e5e5;
+  text-align: center;
+  border-radius: 3px;
+}
+
+.value span {
+  font-size: 12px;
+  font-weight: bolder;
+}
+
+.name {
+  color: #119d55;
+}
+
+.name span {
+  font-size: 12px;
+  font-weight: bolder;
+}

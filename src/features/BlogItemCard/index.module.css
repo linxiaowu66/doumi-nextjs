@@ -1,0 +1,58 @@
+.card {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.bullet {
+  display: inline-block;
+  margin: 0 2px;
+  transform: scale(0.8);
+}
+
+.time {
+  font-size: 14px;
+}
+
+.title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chip {
+  margin: 8px; /* Assuming theme.spacing(0.5) equals 8px */
+}
+
+.pos {
+  margin-bottom: 12px;
+}
+
+.cat {
+  color: #1f8dff;
+  list-style: none;
+  padding: 0;
+}
+
+.cat li {
+  font-weight: bold;
+  text-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cat li svg {
+  margin-right: 10px;
+}
+
+.tags {
+  color: #8f1eff;
+  list-style: none;
+  padding: 0;
+}
+
+.tags li {
+  font-weight: bold;
+  text-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tags li svg {
+  margin-right: 10px;
+}

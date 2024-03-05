@@ -1,0 +1,27 @@
+.root {
+  display: flex;
+  background: #f7f7f7;
+}
+.toolbar {
+  min-height: 82px;
+}
+
+.content {
+  flex-grow: 1;
+  overflow: hidden;
+  background: #fff;
+  padding: 10px;
+  margin: 0 18%;
+}
+
+@media screen and (max-width: 992px) {
+  .content {
+    margin: 0 0;
+  }
+}
+
+.fixedZoom {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+}

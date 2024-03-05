@@ -1,0 +1,11 @@
+.root {
+  width: 350px;
+  padding: 10px 15px;
+}
+
+.formControl {
+  margin: 20px 0px;
+  /* 根据你的主题，`${theme.spacing(2.5)}px` 需要替换为具体的值 */
+  min-width: 120px;
+  max-width: 300px;
+}

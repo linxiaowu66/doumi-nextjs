@@ -1,0 +1,29 @@
+.root {
+  position: relative;
+  width: 100%;
+  height: 94%;
+  float: left;
+  left: -390px;
+  transition: all 500ms;
+  transition-delay: 500ms;
+  bottom: 0px;
+}
+.root.visible {
+  left: 0px;
+}
+
+.root.loginSuccess {
+  bottom: -600px;
+}
+
+.root header {
+  color: #fff;
+  font-size: 2rem;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.root button {
+  margin-top: 20px;
+}

@@ -1,0 +1,108 @@
+.navHeader {
+  top: 0px;
+  width: 100%;
+  height: 82px;
+  z-index: 99;
+  position: fixed;
+  background: #fff;
+}
+@media screen and (max-width: 992px) {
+  .navHeader {
+    height: 100px;
+  }
+}
+.navHeader .container {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.navHeader .logo {
+  color: #119d55;
+  padding: 20px;
+  font-size: 1.5rem;
+}
+.navHeader .tabs {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
+.navHeader .tabs a {
+  padding: 10px 0px;
+  position: relative;
+  margin-right: 50px;
+}
+.navHeader .tabs a::after {
+  top: 100%;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: transform 0.3s, opacity 0.3s;
+}
+.navHeader .tabs a span:first-child {
+  display: block;
+  z-index: 2;
+  font-weight: bold;
+}
+.navHeader .tabs a span:last-child {
+  color: #119d55;
+  display: block;
+  opacity: 0;
+  padding: 12px 0 0 0;
+  z-index: 1;
+  position: absolute;
+  font-size: 0.75rem;
+  transform: translateY(-100%);
+  font-style: italic;
+  transition: transform 0.3s, opacity 0.3s;
+  font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua",
+    Georgia, serif;
+  font-weight: bold;
+  text-shadow: none;
+  text-transform: none;
+}
+.navHeader .tabs a:hover::before,
+.navHeader .tabs a:focus::before,
+.navHeader .tabs a.active::before {
+  height: 6px;
+}
+.navHeader .tabs a:hover::before,
+.navHeader .tabs a:hover::after,
+.navHeader .tabs a:focus::before,
+.navHeader .tabs a:focus::after,
+.navHeader .tabs a.active::before,
+.navHeader .tabs a.active::after {
+  opacity: 1;
+  transform: translateY(0px);
+}
+.navHeader .tabs a:hover span:last-child,
+.navHeader .tabs a:focus span:last-child,
+.navHeader .tabs a.active span:last-child {
+  opacity: 1;
+  transform: translateY(0%);
+}
+.navHeader .tabs a :not(.with-icon) {
+  color: #119d55;
+}
+.navHeader .tabs a :not(.with-icon)::before,
+.navHeader .tabs a :not(.with-icon)::after {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  content: "";
+  opacity: 0.2;
+  position: absolute;
+  background: #119d55;
+  transition: opacity 0.3s, height 0.3s;
+}
+@media screen and (max-width: 992px) {
+  .navHeader .logo {
+    display: none;
+  }
+}
+
+.grow {
+  flex-grow: 1;
+}

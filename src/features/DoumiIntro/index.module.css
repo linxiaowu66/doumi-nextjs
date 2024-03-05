@@ -1,0 +1,12 @@
+.introTitle {
+  font-weight: bold;
+  font-size: 21px;
+  text-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
+  color: #119d55;
+}
+.introDesc {
+  font-size: 16px;
+  color: #9e9e9e;
+  line-height: 2;
+  font-style: italic;
+}

@@ -1,0 +1,16 @@
+.doumiAvatar {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.doumiAvatar::before {
+  width: 100%;
+  content: "";
+  height: 1px;
+  background-color: #ebf2f6;
+  position: absolute;
+  top: 50%;
+}
+.avatar {
+  box-shadow: #e7eef2 0 0 0 6px;
+}
