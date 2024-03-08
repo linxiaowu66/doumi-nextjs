@@ -22,18 +22,10 @@ interface BlogItemProps {
 }
 
 export default function BlogItem(props: BlogItemProps) {
-  // const handleJumpToDetail = () => {
-  //   window.open(`${location.origin}/blog/detail/${props.slug}`, "_blank");
-  // };
-
   // eslint-disable-next-line max-len
-  const sinaLink = `https://service.weibo.com/share/share.php?title=${
-    props.title
-  } - ${
-    props.digest
-  }&url=${`https://blog.5udou.cn/blog/detail/${props.slug}`}&pic=${encodeURIComponent(
-    props.mediaUrl
-  )}`;
+  const sinaLink = `https://service.weibo.com/share/share.php?url=${encodeURIComponent(
+    `https://blog.5udou.cn/blog/detail/${props.slug}`
+  )}&title=${props.title}&pic=${encodeURIComponent(props.mediaUrl)}`;
 
   return (
     <Card className={styles.card}>

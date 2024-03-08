@@ -95,7 +95,7 @@ const BlogDetail: React.FC<Prop> = async (props) => {
               );
             },
           }}
-          className="blog-detail"
+          className="article-markdown-content"
         >
           {response.content}
         </ReactMarkdown>
