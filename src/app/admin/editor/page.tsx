@@ -5,12 +5,10 @@ import { TextField, Button, Menu, MenuItem } from "@mui/material";
 import { Settings } from "@mui/icons-material";
 import qs from "query-string";
 import BlogContainer from "@/features/BlogContainer";
-import ReactMarkdown from "react-markdown";
 import BlogConfig from "@/features/BlogConfig";
 import { DouMiBlog } from "@/interface";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import "./page.css";
+import BlogPreview from "@/features/BlogPreview";
 
 const initData = { tags: [], categories: [] };
 
@@ -159,13 +157,7 @@ const BlogAdminEditor = () => {
   };
 
   return (
-    <BlogContainer
-      isLogin
-      contentClass="blog-editor-wrapper"
-      isOpenSnackbar={isOpenSnackbar}
-      snackbarMsg={snackbarMsg}
-      closeSnackBar={() => setIsOpenSnackbar(false)}
-    >
+    <BlogContainer isLogin contentClass="blog-editor-wrapper">
       <header className="blog-title">
         <TextField
           id="outlined-helperText"
@@ -212,41 +204,10 @@ const BlogAdminEditor = () => {
             value={blogContent}
             className="markdown-realtext"
             onChange={handleChange}
-          ></textarea>
+          />
         </section>
         <section className="blog-preview">
-          <ReactMarkdown
-            components={{
-              code(props) {
-                const { children, className, node, ...rest } = props;
-                const match = /language-(\w+)/.exec(className || "");
-                return match ? (
-                  <SyntaxHighlighter
-                    {...(rest as any)}
-                    PreTag="div"
-                    language={match[1]}
-                    style={atomDark}
-                  >
-                    {String(children).replace(/\n$/, "")}
-                  </SyntaxHighlighter>
-                ) : (
-                  <code {...rest} className={className}>
-                    {children}
-                  </code>
-                );
-              },
-              a(props) {
-                return (
-                  <a href={props.href} target="__blank">
-                    {props.children}
-                  </a>
-                );
-              },
-            }}
-            className="blog-preview-text"
-          >
-            {blogContent}
-          </ReactMarkdown>
+          <BlogPreview content={blogContent} />
         </section>
       </div>
       <BlogConfig

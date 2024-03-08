@@ -59,6 +59,6 @@ export const navigatorListWithLogin = [
     name: "退出",
     subName: "Exit",
     icon: <ExitToApp />,
-    link: "javascript:void(0)",
+    link: "",
   },
 ];

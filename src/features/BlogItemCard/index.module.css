@@ -1,6 +1,23 @@
 .card {
   margin-bottom: 10px;
   cursor: pointer;
+  position: relative;
+}
+.card.active {
+  background-color: #d2e5ff;
+  border-color: #1677ff;
+}
+.card.active:after {
+  position: absolute;
+  inset-block-start: 2px;
+  inset-inline-end: 2px;
+  width: 0;
+  height: 0;
+  border: 10px solid #1677ff;
+  border-block-end: 10px solid transparent;
+  border-inline-start: 10px solid transparent;
+  border-start-end-radius: 6px;
+  content: "";
 }
 
 .bullet {

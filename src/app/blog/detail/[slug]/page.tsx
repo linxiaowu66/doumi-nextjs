@@ -7,10 +7,7 @@ import {
   DescriptionOutlined,
 } from "@mui/icons-material";
 import dayjs from "dayjs";
-import ReactMarkdown from "react-markdown";
 import BlogContainer from "@/features/BlogContainer";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import "progress-catalog/src/progress-catalog.css";
 import Image from "next/image";
 import "./page.css";
@@ -66,40 +63,7 @@ const BlogDetail: React.FC<Prop> = async (props) => {
           <span>字数统计 {response.content.length}</span>
         </div>
       </section>
-      <section id="blog-detail">
-        <ReactMarkdown
-          components={{
-            code(props) {
-              const { children, className, node, ...rest } = props;
-              const match = /language-(\w+)/.exec(className || "");
-              return match ? (
-                <SyntaxHighlighter
-                  {...(rest as any)}
-                  PreTag="div"
-                  language={match[1]}
-                  style={atomDark}
-                >
-                  {String(children).replace(/\n$/, "")}
-                </SyntaxHighlighter>
-              ) : (
-                <code {...rest} className={className}>
-                  {children}
-                </code>
-              );
-            },
-            a(props) {
-              return (
-                <a href={props.href} target="__blank">
-                  {props.children}
-                </a>
-              );
-            },
-          }}
-          className="article-markdown-content"
-        >
-          {response.content}
-        </ReactMarkdown>
-      </section>
+      <section id="blog-detail"></section>
       <section className="micro-program">
         <h4>小程序关注一波~</h4>
         <Image

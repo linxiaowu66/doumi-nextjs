@@ -1,0 +1,16 @@
+.overflow {
+  overflow: scroll;
+  height: 100%;
+  /* 隐藏滚动条，当IE下溢出，仍然可以滚动 */
+  -ms-overflow-style: none;
+  /* 火狐下隐藏滚动条 */
+  scrollbar-width: none;
+  padding-bottom: 30px;
+}
+.overflow::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  -webkit-appearance: none;
+  opacity: 0 !important;
+}

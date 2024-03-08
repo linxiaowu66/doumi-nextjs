@@ -39,7 +39,7 @@ export default function BlogAppBar(props: AppBarProps) {
         <div className={styles.tabs}>
           {navList.map((item) => {
             const isActive = urlObject.pathname === item.link && item.link;
-            return item.icon ? (
+            return item.name === "退出" ? (
               <Logout {...item} key={item.name} />
             ) : (
               <Link

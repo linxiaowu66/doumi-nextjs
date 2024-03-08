@@ -1,30 +1,39 @@
 "use client";
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
-import BlogItem from "@/features/BlogItem";
 import axios from "axios";
 import { DouMiBlog } from "@/interface";
+import BlogItemCard from "../BlogItemCard";
+import BlogItem from "../BlogItem";
+import { useAppDispatch } from "@/lib/hooks";
+import { setContent } from "@/lib/features/admin/adminSlice";
 
 export default function InfiniteList({
   initialPosts,
   queryArch,
   queryCat,
   queryTag,
+  isLogin = false,
 }: {
   initialPosts: {
     list: DouMiBlog.ArticleBrief[];
     currentPage: number;
     pageCount: number;
   };
-  queryArch: string | null;
-  queryCat: string | null;
-  queryTag: string | null;
+  isLogin?: boolean;
+  queryArch?: string | null;
+  queryCat?: string | null;
+  queryTag?: string | null;
 }) {
-  const [blogList, setBlogList] = useState<
-    { title: string; digest: string; slug: string; illustration: string }[]
-  >(initialPosts.list);
+  const [blogList, setBlogList] = useState<DouMiBlog.ArticleBrief[]>(
+    initialPosts.list
+  );
   const [pageCount, setPageCount] = useState(initialPosts.pageCount);
   const [currentPage, setCurrentPage] = useState(initialPosts.currentPage);
+  const [selectedArticle, setSelectedArticle] = useState<string>(
+    initialPosts.list[0].slug
+  );
+  const dispatch = useAppDispatch();
 
   const fetchBlogList = async (currentPage: number) => {
     const result = await axios.get<DouMiBlog.ArticleList>("/api/article", {
@@ -76,15 +85,24 @@ export default function InfiniteList({
   };
 
   const renderBlogItem = () => {
-    return blogList.map((item) => (
-      <BlogItem
-        key={item.slug}
-        title={item.title}
-        mediaUrl={item.illustration}
-        slug={item.slug}
-        digest={item.digest}
-      />
-    ));
+    return blogList.map((item) => {
+      return isLogin ? (
+        <BlogItemCard
+          key={item.slug}
+          {...item}
+          selectedArticle={selectedArticle}
+          onClick={() => {
+            setSelectedArticle(item.slug);
+            dispatch(setContent({ articleContent: item.content }));
+          }}
+          onEdit={(slug: string) => {
+            window.open(`${location.host}/admin/editor?slug=${slug}`);
+          }}
+        />
+      ) : (
+        <BlogItem key={item.slug} {...item} />
+      );
+    });
   };
 
   return (
