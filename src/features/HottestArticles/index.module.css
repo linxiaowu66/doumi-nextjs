@@ -1,0 +1,66 @@
+.root ul {
+  padding: 0;
+  margin: 65px 0px;
+}
+
+.root ul li {
+  width: 100%;
+  display: block;
+  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #fff;
+  padding: 15px;
+}
+
+.root ul li:before {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin: 0 5px;
+  font-size: 12px;
+  border: 2px solid #ccc;
+  text-align: center;
+  color: #119d55;
+  box-sizing: content-box;
+}
+
+.root ul li:nth-child(1):before {
+  content: "1";
+}
+
+.root ul li:nth-child(2):before {
+  content: "2";
+}
+
+.root ul li:nth-child(3):before {
+  content: "3";
+}
+
+.root ul li:nth-child(4):before {
+  content: "4";
+}
+
+.root ul li:nth-child(5):before {
+  content: "5";
+}
+
+.root ul li a {
+  color: #39c;
+  text-decoration: none;
+}
+
+.root ul li a:hover {
+  text-decoration: none;
+  color: #119d55;
+}
+
+.root ul li a span {
+  line-height: inherit;
+  font-weight: normal;
+}
+
+.root ul li a time {
+  color: #bbbbbb;
+  font-size: 12px;
+  font-weight: normal;
+  margin-left: 10px;
+}

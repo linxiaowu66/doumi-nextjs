@@ -1,4 +1,3 @@
-"use client";
 import BlogContainer from "@/features/BlogContainer";
 import Timeline from "./Timeline";
 import { Divider } from "@mui/material";

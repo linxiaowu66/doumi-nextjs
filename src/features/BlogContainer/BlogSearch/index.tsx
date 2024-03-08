@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import { Search } from "@mui/icons-material";
 import { InputBase, ClickAwayListener } from "@mui/material";

@@ -4,7 +4,7 @@ export const navigatorListWithNotLogin = [
   {
     name: "首页",
     subName: "Home",
-    link: "",
+    link: "/",
   },
   {
     name: "博客",

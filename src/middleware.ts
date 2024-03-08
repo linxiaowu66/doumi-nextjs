@@ -20,5 +20,14 @@ export default async function middleware(req: NextRequest) {
   } else if (session && (path === "/auth/login" || path === "/auth/register")) {
     return NextResponse.redirect(new URL("/admin", req.url));
   }
-  return NextResponse.next();
+  // Store current request url in a custom header, which you can read later
+  const requestHeaders = new Headers(req.headers);
+  requestHeaders.set("x-url", req.url);
+
+  return NextResponse.next({
+    request: {
+      // Apply new request headers
+      headers: requestHeaders,
+    },
+  });
 }

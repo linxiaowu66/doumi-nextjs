@@ -1,5 +1,5 @@
 import * as React from "react";
-import QRCode from "qrcode.react";
+
 import {
   CardActionArea,
   Card,
@@ -10,6 +10,8 @@ import {
   Typography,
 } from "@mui/material";
 import styles from "./index.module.css";
+import Link from "next/link";
+import WxShare from "./WxShare";
 
 interface BlogItemProps {
   mediaUrl: string;
@@ -20,28 +22,22 @@ interface BlogItemProps {
 }
 
 export default function BlogItem(props: BlogItemProps) {
-  const [isShowWeixinQrCode, setShow] = React.useState(false);
-
-  const handleJumpToDetail = () => {
-    window.open(`${location.origin}/blog/detail/${props.slug}`, "_blank");
-  };
-
-  const handleToggleWeixin = () => {
-    setShow(!isShowWeixinQrCode);
-  };
+  // const handleJumpToDetail = () => {
+  //   window.open(`${location.origin}/blog/detail/${props.slug}`, "_blank");
+  // };
 
   // eslint-disable-next-line max-len
   const sinaLink = `https://service.weibo.com/share/share.php?title=${
     props.title
-  } - ${props.digest}&url=${
-    window.location.origin + `/blog/${props.slug}`
-  }&pic=${encodeURIComponent(props.mediaUrl)}`;
-  const weixinLink = `${
-    window.location.origin + `#/blog/detail/${props.slug}`
-  }`;
+  } - ${
+    props.digest
+  }&url=${`https://blog.5udou.cn/blog/detail/${props.slug}`}&pic=${encodeURIComponent(
+    props.mediaUrl
+  )}`;
+
   return (
     <Card className={styles.card}>
-      <CardActionArea onClick={handleJumpToDetail} className={styles.content}>
+      <CardActionArea className={styles.content}>
         <CardMedia
           className={styles.media}
           image={props.mediaUrl}
@@ -59,7 +55,7 @@ export default function BlogItem(props: BlogItemProps) {
       <CardActions className={styles.listAction}>
         <div>
           <Button size="small" color="primary" style={{ lineHeight: 1 }}>
-            <a href={sinaLink} target="__blank">
+            <Link href={sinaLink} target="__blank">
               {/* eslint-disable-next-line max-len */}
               <svg
                 fill="currentColor"
@@ -73,42 +69,13 @@ export default function BlogItem(props: BlogItemProps) {
                   fill-rule="evenodd"
                 ></path>
               </svg>
-            </a>
+            </Link>
           </Button>
-          <Button
-            size="small"
-            color="primary"
-            style={{ lineHeight: 1 }}
-            className={styles.weixinShare}
-            onClick={handleToggleWeixin}
-          >
-            {/* eslint-disable-next-line max-len */}
-            <svg
-              color="#60C84D"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              width="17"
-              height="17"
-            >
-              <path
-                d="M2.224 21.667s4.24-1.825 4.788-2.056C15.029 23.141 22 17.714 22 11.898 22 6.984 17.523 3 12 3S2 6.984 2 11.898c0 1.86.64 3.585 1.737 5.013-.274.833-1.513 4.756-1.513 4.756zm5.943-9.707c.69 0 1.25-.569 1.25-1.271a1.26 1.26 0 0 0-1.25-1.271c-.69 0-1.25.569-1.25 1.27 0 .703.56 1.272 1.25 1.272zm7.583 0c.69 0 1.25-.569 1.25-1.271a1.26 1.26 0 0 0-1.25-1.271c-.69 0-1.25.569-1.25 1.27 0 .703.56 1.272 1.25 1.272z"
-                fill-rule="evenodd"
-              ></path>
-            </svg>
-            <div
-              className={styles.qrCode}
-              style={
-                isShowWeixinQrCode ? { display: "block" } : { display: "none" }
-              }
-            >
-              <span style={{ color: "rgba(0, 0, 0, 0.54)" }}>微信扫一扫</span>
-              <QRCode value={weixinLink} size={94} includeMargin />
-            </div>
-          </Button>
+          <WxShare slug={props.slug} />
         </div>
-        <Button size="small" color="primary" onClick={handleJumpToDetail}>
+        <Link href={`/blog/detail/${props.slug}`} target="__blank">
           阅读全文
-        </Button>
+        </Link>
       </CardActions>
     </Card>
   );

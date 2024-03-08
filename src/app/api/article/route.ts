@@ -1,11 +1,19 @@
 import { getDataSource } from "@/database";
-import { Archive, Article, Category, Tag, User } from "@/database/entities";
+import {
+  Archive,
+  Article,
+  ArticleStatus,
+  Category,
+  Tag,
+  User,
+} from "@/database/entities";
 import { DouMiBlog } from "@/interface";
 import { logger } from "@/logger";
 import { updateWebsiteStatistics } from "@/service/statistics";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/route";
+import { In } from "typeorm";
 
 // 查询所有文章列表
 // 支持查询最热门的文章：
@@ -22,9 +30,87 @@ export async function GET(request: NextRequest) {
   const queryCat = request.nextUrl.searchParams.get("queryCat");
   const queryArch = request.nextUrl.searchParams.get("queryArch");
   const articleStatus = request.nextUrl.searchParams.get("articleStatus");
+
+  const res = await queryArticles(
+    +currentPage,
+    +pageSize,
+    order,
+    queryTag,
+    queryCat,
+    queryArch,
+    articleStatus
+  );
+
+  return NextResponse.json(res);
+}
+
+// 新建文章
+export async function POST(request: NextRequest, response: NextResponse) {
+  const article = await request.json();
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return NextResponse.json({
+      status: 0,
+      data: {
+        msg: "请先登录",
+      },
+    });
+  }
+  const AppDataSource = await getDataSource();
+  const user = await AppDataSource.getRepository(User).findOne({
+    where: { email: session.user.email },
+  });
+  const result = await createOrUpdateArticle(
+    article,
+    user?.username || "小米喳"
+  );
+
+  return NextResponse.json({
+    status: 1,
+    data: {
+      msg: article.articleStatus === "draft" ? "保存草稿成功" : "发布成功",
+      slug: (result as Article).slug,
+    },
+  });
+}
+
+// 编辑文章
+export async function PATCH(request: NextRequest) {
+  const article = await request.json();
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return NextResponse.json({
+      status: 0,
+      data: {
+        msg: "请先登录",
+      },
+    });
+  }
+  const AppDataSource = await getDataSource();
+  const user = await AppDataSource.getRepository(User).findOne({
+    where: { email: session.user.email },
+  });
+  await createOrUpdateArticle(article, user?.username || "小米喳", true);
+
+  return NextResponse.json({
+    status: 1,
+    data: {
+      msg: article.articleStatus === "draft" ? "更新草稿成功" : "更新发布成功",
+    },
+  });
+}
+
+export const queryArticles = async (
+  currentPage: number,
+  pageSize: number,
+  order?: string | null,
+  queryTag?: string | null,
+  queryCat?: string | null,
+  queryArch?: string | null,
+  articleStatus?: string | null
+) => {
   const AppDataSource = await getDataSource();
   const repo = AppDataSource.getRepository(Article);
-
   const baseQuery = {
     order: order
       ? (JSON.parse(order) as {})
@@ -49,10 +135,11 @@ export async function GET(request: NextRequest) {
     let orderField = "article.createdAt";
     let orderDef: "ASC" | "DESC" = "DESC";
     if (order) {
+      const orderObject = JSON.parse(order);
       // 排序字段仅支持1个字段
-      Object.keys(order).forEach((item) => {
+      Object.keys(orderObject).forEach((item: string) => {
         orderField = `article.${item}`;
-        orderDef = order[item];
+        orderDef = orderObject[item];
       });
     }
     const queryBuilder = repo.createQueryBuilder("article");
@@ -101,7 +188,7 @@ export async function GET(request: NextRequest) {
     [list, count] = await repo.findAndCount(finalQuery);
   }
 
-  const res = {
+  return {
     list: list.map((item) => ({
       ...item,
       tags: item.tags.map((it) => it.name),
@@ -112,40 +199,7 @@ export async function GET(request: NextRequest) {
     pageCount: Math.ceil(count / +pageSize),
     currentPage,
   };
-  return NextResponse.json(res);
-}
-
-// 新建文章
-export async function POST(request: NextRequest, response: NextResponse) {
-  const article = await request.json();
-  const session = await getServerSession(request, response, authOptions);
-  console.log(session);
-  const result = await createOrUpdateArticle(
-    article,
-    "linxiaowu" // TODO: 从session中获取
-  );
-
-  return NextResponse.json({
-    status: 1,
-    data: {
-      msg: article.articleStatus === "draft" ? "保存草稿成功" : "发布成功",
-      slug: (result as Article).slug,
-    },
-  });
-}
-
-// 编辑文章
-export async function PATCH(request: NextRequest) {
-  const article = await request.json();
-  await createOrUpdateArticle(article, "linxiaowu", true);
-
-  return NextResponse.json({
-    status: 1,
-    data: {
-      msg: article.articleStatus === "draft" ? "更新草稿成功" : "更新发布成功",
-    },
-  });
-}
+};
 
 const createOrUpdateArticle = async (
   article: DouMiBlog.ArticleDetail,
@@ -160,11 +214,13 @@ const createOrUpdateArticle = async (
   const archiveRepo = AppDataSource.getRepository(Archive);
   const userRepo = AppDataSource.getRepository(User);
 
-  const loadTags = await tagRepo.find({ name: In(tags) });
-  const loadCat = await catRepo.find({ name: category });
-  const loadUser = await userRepo.find({ email: username });
+  const loadTags = await tagRepo.find({ where: { name: In(tags) } });
+  const loadCat = await catRepo.find({ where: { name: category } });
+  const loadUser = await userRepo.find({ where: { email: username } });
   let loadArch = await archiveRepo.findOne({
-    archiveTime: archiveTime.substr(0, 7),
+    where: {
+      archiveTime: archiveTime.substr(0, 7),
+    },
   });
   const repo = AppDataSource.getRepository(Article);
 
@@ -179,7 +235,7 @@ const createOrUpdateArticle = async (
   if (!isUpdate) {
     articleIns = new Article();
   } else {
-    articleIns = await repo.findOne({ slug: article.slug });
+    articleIns = await repo.findOne({ where: { slug: article.slug } });
 
     if (!articleIns) {
       throw new Error("对应博文不存在，请重新确认");

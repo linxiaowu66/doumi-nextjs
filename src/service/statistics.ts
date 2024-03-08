@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { getDataSource } from "@/database";
 import { Reader, Website } from "@/database/entities";
 import { logger } from "@/logger";
+import dayjs from "dayjs";
 
 export const updateArticleStatictics = async (slug: string) => {
   const header = headers();
@@ -68,39 +69,44 @@ export const updateWebsiteStatistics = async () => {
       website.todayIps.push(reqIp);
       website.todayPv = +website.todayPv + 1;
       website.todayUv = +website.todayUv + 1;
-      website.totalPv = +website.totalPv + 1;
-      website.totalUv = +website.totalUv + 1;
     } else {
-      website.totalPv = +website.totalPv + 1;
       website.todayPv = +website.todayPv + 1;
     }
     repo.save(website);
   } else {
-    // 不存在的话，那么新建，同时需要删除7天之外的数据
-    const yesterday = new Date().getTime() - 24 * 3600 * 1000;
-    const yesResult = await repo.findOne({
-      where: {
-        date: AwesomeHelp.convertDate(new Date(yesterday), "YYYY-MM-DD"),
-      },
-    });
     const newData = new Website();
     newData.todayIps = [reqIp];
     newData.todayPv = 1;
     newData.todayUv = 1;
-    newData.totalPv = +(yesResult ? yesResult.totalPv : 0) + 1;
-    newData.yesterdayPv = +(yesResult ? yesResult.totalPv : 0);
-    newData.yesterdayUv = +(yesResult ? yesResult.totalUv : 0);
-    newData.totalUv = +(yesResult ? yesResult.totalUv : 0) + 1;
+    // 历史数据初始化，忽略即可
+    newData.yesterdayPv = 0;
+    newData.yesterdayUv = 0;
+    newData.totalPv = 0;
+    newData.totalUv = 0;
     newData.date = now;
-    repo.save(newData);
-    const beyond7Days = new Date().getTime() - 7 * 24 * 3600 * 1000;
-    const result = await repo.findOne({
-      where: {
-        date: AwesomeHelp.convertDate(new Date(beyond7Days), "YYYY-MM-DD"),
-      },
-    });
-    if (result) {
-      await repo.delete(result.id);
-    }
+    await repo.save(newData);
   }
 };
+
+export async function getWebsiteSummaryData() {
+  const AppDataSource = await getDataSource();
+  const repo = AppDataSource.getRepository(Website);
+
+  const websiteSince = new Date(2016, 7, 8); // 博客开始时期
+
+  const operationDays = dayjs().diff(websiteSince, "day");
+  const totalPv = await repo
+    .createQueryBuilder("website")
+    .select("SUM(todayPv)", "sum")
+    .getRawOne();
+  const totalUv = await repo
+    .createQueryBuilder("website")
+    .select("SUM(todayUv)", "sum")
+    .getRawOne();
+
+  return {
+    operationDays: `${operationDays}天`,
+    totalPv: totalPv.sum,
+    totalUv: totalUv.sum,
+  };
+}

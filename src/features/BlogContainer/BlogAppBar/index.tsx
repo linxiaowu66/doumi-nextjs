@@ -1,7 +1,6 @@
-"use client";
 import * as React from "react";
-// import axios from 'axios';
-import { Link, Tooltip } from "@mui/material";
+import { headers } from "next/headers";
+import { Link } from "@mui/material";
 import BlogSearch from "../BlogSearch";
 import {
   navigatorListWithLogin,
@@ -9,7 +8,7 @@ import {
 } from "@/utils/menu";
 import { DouMiAvatar } from "../../DoumiAvatar";
 import styles from "./index.module.css";
-import { signOut } from "next-auth/react";
+import Logout from "./Logout";
 
 interface AppBarProps {
   // handleDrawerToggle: () => void,
@@ -19,11 +18,9 @@ interface AppBarProps {
 
 export default function BlogAppBar(props: AppBarProps) {
   const { isLogin } = props;
-  const handleLogout = async () => {
-    await signOut({ redirect: false });
-
-    location.href = "/auth/login";
-  };
+  const heads = headers();
+  const url = heads.get("x-url");
+  const urlObject = new URL(url || "http://localhost:3000");
 
   const navList: {
     name: string;
@@ -41,20 +38,9 @@ export default function BlogAppBar(props: AppBarProps) {
 
         <div className={styles.tabs}>
           {navList.map((item) => {
-            const isActive = location.pathname.match(item.link) && item.link;
+            const isActive = urlObject.pathname === item.link && item.link;
             return item.icon ? (
-              <Tooltip title={item.name} enterDelay={500}>
-                <a
-                  href={item.link}
-                  className={styles.withIcon}
-                  target="_blank"
-                  onClick={
-                    item.subName === "Exit" ? () => handleLogout() : () => {}
-                  }
-                >
-                  {item.icon}
-                </a>
-              </Tooltip>
+              <Logout {...item} key={item.name} />
             ) : (
               <Link
                 className={isActive ? styles.active : ""}

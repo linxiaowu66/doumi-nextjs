@@ -1,5 +1,4 @@
-"use client";
-import React, { useState } from "react";
+import React from "react";
 import { Facebook, Email } from "@mui/icons-material";
 import BlogContainer from "@/features/BlogContainer";
 import { DouMiIntroduction } from "@/features/DoumiIntro";
@@ -10,47 +9,8 @@ import ClickTooltip from "./ClickTooltip";
 import Image from "next/image";
 
 const AboutDouMi = () => {
-  const [isOpenSnackbar, setIsOpenSnackbar] = useState(false);
-  const [snackbarMsg, setSnackbarMsg] = useState("");
-
-  const copyTextToClipboard = (text: string) => {
-    const textArea = document.createElement("textarea");
-
-    textArea.style.position = "fixed";
-    textArea.style.top = "0px";
-    textArea.style.left = "0px";
-    textArea.style.width = "2em";
-    textArea.style.height = "2em";
-    textArea.style.padding = "0px";
-    textArea.style.border = "none";
-    textArea.style.outline = "none";
-    textArea.style.boxShadow = "none";
-    textArea.style.background = "transparent";
-
-    textArea.value = text;
-
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-
-    try {
-      const successful = document.execCommand("copy");
-      setIsOpenSnackbar(true);
-      setSnackbarMsg(successful ? "复制成功" : "复制失败");
-    } catch (err) {
-      setIsOpenSnackbar(true);
-      setSnackbarMsg("浏览器不支持复制！！");
-    }
-
-    document.body.removeChild(textArea);
-  };
-
   return (
-    <BlogContainer
-      contentClass="doumi-info"
-      isOpenSnackbar={isOpenSnackbar}
-      snackbarMsg={snackbarMsg}
-    >
+    <BlogContainer contentClass="doumi-info">
       <DouMiIntroduction avatarSize={120} fontSize={16} />
       <DouMiDetailItem title="关于豆米">
         <p className="detail-intro">
@@ -111,16 +71,10 @@ const AboutDouMi = () => {
           )
         </p>
         <div className="contact-me-channels">
-          <ClickTooltip
-            title="linguang66990@126.com"
-            extraAction={() => copyTextToClipboard("linguang66990@126.com")}
-          >
+          <ClickTooltip title="linguang66990@126.com">
             <Email />
           </ClickTooltip>
-          <ClickTooltip
-            title="lg997312609"
-            extraAction={() => copyTextToClipboard("lg997312609")}
-          >
+          <ClickTooltip title="lg997312609">
             <Facebook />
           </ClickTooltip>
         </div>

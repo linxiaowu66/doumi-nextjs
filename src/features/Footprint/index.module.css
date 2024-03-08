@@ -7,3 +7,12 @@
   font-size: 13;
   color: #ccc;
 }
+.data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.data > div {
+  display: flex;
+  align-items: center;
+}
