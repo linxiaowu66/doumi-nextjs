@@ -16,9 +16,20 @@
   flex-shrink: 0;
   flex-grow: 1;
   overflow: scroll;
+  /* 隐藏滚动条，当IE下溢出，仍然可以滚动 */
+  -ms-overflow-style: none;
+  /* 火狐下隐藏滚动条 */
+  scrollbar-width: none;
+}
+.blogListContainer::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  -webkit-appearance: none;
+  opacity: 0 !important;
 }
 .blogListContainer > div {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
 }

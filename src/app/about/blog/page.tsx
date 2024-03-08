@@ -20,12 +20,12 @@ const AboutWebsite = () => {
         timeList={[
           {
             subTitle: "前端",
-            time: "2020-02-10",
+            time: "2024-03-08",
             desc: "Nextjs + Material UI",
           },
           {
             subTitle: "后端",
-            time: "2020-02-10",
+            time: "2024-03-08",
             desc: "Nextjs + TypeORM",
           },
         ]}
