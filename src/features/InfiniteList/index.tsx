@@ -96,7 +96,7 @@ export default function InfiniteList({
             dispatch(setContent({ articleContent: item.content }));
           }}
           onEdit={(slug: string) => {
-            window.open(`${location.host}/admin/editor?slug=${slug}`);
+            window.open(`${location.origin}/admin/editor?slug=${slug}`);
           }}
         />
       ) : (

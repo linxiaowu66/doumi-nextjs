@@ -1,5 +1,5 @@
+"use client";
 import * as React from "react";
-import dayjs from "dayjs";
 import {
   Select,
   TextField,
@@ -8,33 +8,18 @@ import {
   MenuItem,
   FormControl,
   Drawer,
-  SelectChangeEvent,
 } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import styles from "./index.module.css";
-
-interface ConfigProps {
-  digest: string;
-  illustration: string;
-  tags: string[];
-  archiveTime: string;
-  category: string;
-}
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { setArticle, setSetting } from "@/lib/features/editor/editorSlice";
+import dayjs from "dayjs";
 
 interface BlogConfigProps {
-  isOpen: boolean;
-  closeCb: (data: ConfigProps) => void;
   tags: string[];
   cats: string[];
-  initData?: {
-    tags: string[];
-    cat: string;
-    archiveTime: string;
-    illustration: string;
-    digest: string;
-  };
 }
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -48,68 +33,39 @@ const MenuProps = {
 };
 
 export default function BlogConfig(props: BlogConfigProps) {
-  const [selectedDate, setSelectedDate] = React.useState<Date>(new Date());
-  const [illustration, setIllustration] = React.useState<string>("");
-  const [digest, setDigest] = React.useState<string>("");
+  const article = useAppSelector((state) => state.editor.article);
+  const isOpen = useAppSelector((state) => state.editor.showSetting);
+  const dispatch = useAppDispatch();
 
-  const [selectTags, setTags] = React.useState<string[]>([]);
-  const [selectCat, setCategory] = React.useState<string>("");
-
-  React.useEffect(() => {
-    if (props.initData?.archiveTime !== undefined) {
-      setSelectedDate(
-        props.initData?.archiveTime === ""
-          ? new Date()
-          : new Date(props.initData?.archiveTime)
-      );
-    }
-    if (props.initData?.illustration !== undefined) {
-      setIllustration(props.initData?.illustration);
-    }
-    if (props.initData?.digest !== undefined) {
-      setDigest(props.initData?.digest);
-    }
-    if (props.initData?.tags !== undefined) {
-      setTags(props.initData?.tags);
-    }
-    if (props.initData?.cat !== undefined) {
-      setCategory(props.initData?.cat);
-    }
-  }, [props]);
-
-  const handleDateChange = (date: Date | null) => {
-    if (date !== null) setSelectedDate(date);
-  };
-
-  const handleTagsChange = (event: SelectChangeEvent) => {
-    setTags(event.target.value.split(","));
-  };
-  const handleCatChange = (event: SelectChangeEvent) => {
-    setCategory(event.target.value as string);
+  const handleChange = (data: Record<string, any>) => {
+    dispatch(
+      setArticle({
+        article: {
+          ...article,
+          ...data,
+        },
+      })
+    );
   };
 
   return (
     <div>
       <Drawer
         anchor="right"
-        open={props.isOpen}
-        onClose={() =>
-          props.closeCb({
-            archiveTime: dayjs(selectedDate).format("YYYY-MM-DD"),
-            illustration,
-            tags: selectTags,
-            category: selectCat,
-            digest,
-          })
-        }
+        open={isOpen}
+        onClose={() => dispatch(setSetting({ showSetting: false }))}
       >
         <div className={styles.root}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               format="YYYY-MM-DD"
               label="归档时间"
-              value={selectedDate}
-              onChange={handleDateChange}
+              value={
+                article.archiveTime === ""
+                  ? dayjs()
+                  : dayjs(article.archiveTime)
+              }
+              onChange={(newValue) => handleChange({ archiveTime: newValue })}
             />
           </LocalizationProvider>
           <TextField
@@ -117,9 +73,9 @@ export default function BlogConfig(props: BlogConfigProps) {
             id="outlined-basic"
             label="首页图片"
             variant="outlined"
-            value={illustration}
+            value={article.illustration}
             fullWidth
-            onChange={(e) => setIllustration(e.target.value)}
+            onChange={(e) => handleChange({ illustration: e.target.value })}
           />
           <TextField
             className={styles.formControl}
@@ -128,9 +84,9 @@ export default function BlogConfig(props: BlogConfigProps) {
             label="文章摘要"
             variant="outlined"
             rows={10}
-            value={digest}
+            value={article.digest}
             fullWidth
-            onChange={(e) => setDigest(e.target.value)}
+            onChange={(e) => handleChange({ digest: e.target.value })}
           />
           <FormControl className={styles.formControl} fullWidth>
             <InputLabel id="demo-mutiple-name-label">文章标签</InputLabel>
@@ -138,8 +94,8 @@ export default function BlogConfig(props: BlogConfigProps) {
               labelId="demo-mutiple-name-label"
               id="demo-mutiple-name"
               multiple
-              value={selectTags.join(",")}
-              onChange={handleTagsChange}
+              value={article.tags || []}
+              onChange={(event) => handleChange({ tags: event.target.value })}
               input={<Input />}
               MenuProps={MenuProps}
             >
@@ -159,8 +115,10 @@ export default function BlogConfig(props: BlogConfigProps) {
             <Select
               labelId="demo-mutiple-name-label"
               id="demo-mutiple-name"
-              value={selectCat}
-              onChange={handleCatChange}
+              value={article.category}
+              onChange={(event) =>
+                handleChange({ category: event.target.value })
+              }
               input={<Input />}
               MenuProps={MenuProps}
             >

@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
 }
 
 // 新建文章
-export async function POST(request: NextRequest, response: NextResponse) {
+export async function POST(request: NextRequest) {
   const article = await request.json();
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -56,14 +56,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
       },
     });
   }
-  const AppDataSource = await getDataSource();
-  const user = await AppDataSource.getRepository(User).findOne({
-    where: { email: session.user.email },
-  });
-  const result = await createOrUpdateArticle(
-    article,
-    user?.username || "小米喳"
-  );
+  const result = await createOrUpdateArticle(article, session.user.email);
 
   return NextResponse.json({
     status: 1,
@@ -75,7 +68,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
 }
 
 // 编辑文章
-export async function PATCH(request: NextRequest) {
+export async function PUT(request: NextRequest) {
   const article = await request.json();
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -86,11 +79,8 @@ export async function PATCH(request: NextRequest) {
       },
     });
   }
-  const AppDataSource = await getDataSource();
-  const user = await AppDataSource.getRepository(User).findOne({
-    where: { email: session.user.email },
-  });
-  await createOrUpdateArticle(article, user?.username || "小米喳", true);
+
+  await createOrUpdateArticle(article, session.user.email, true);
 
   return NextResponse.json({
     status: 1,

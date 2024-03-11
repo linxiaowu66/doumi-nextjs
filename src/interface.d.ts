@@ -44,6 +44,7 @@ export namespace DouMiBlog {
     digest: string;
     articleStatus: "draft" | "published";
     content: string;
+    archiveTime: string;
   }
 
   interface PropertyItem {
