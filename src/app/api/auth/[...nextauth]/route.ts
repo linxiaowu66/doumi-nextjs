@@ -7,6 +7,7 @@ import { User } from "@/database/entities";
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
+    maxAge: 24 * 60 * 60, // 24 hours
   },
   // 必须加这个，否则会报错：'JWEDecryptionFailed: decryption operation failed\n'
   secret: "doumiblog", // process.env.AUTH_SECRET,

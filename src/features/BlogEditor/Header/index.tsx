@@ -1,6 +1,15 @@
 "use client";
 import axios from "axios";
-import { TextField, Button, Menu, MenuItem } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Menu,
+  MenuItem,
+  Backdrop,
+  CircularProgress,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import { Settings } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
@@ -20,6 +29,8 @@ const EditorHeader = (props: {
   const dispatch = useAppDispatch();
   const article = useAppSelector((state) => state.editor.article);
   const editMode = useAppSelector((state) => state.editor.editMode);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     if (initalArticle) {
@@ -36,28 +47,28 @@ const EditorHeader = (props: {
     setAnchorEl(null);
   };
   const handleSubmit = async (actionType: "published" | "draft") => {
-    try {
-      const result = editMode
-        ? await axios.put(
-            `/api/article`,
-            { ...article, slug: article.slug, articleStatus: actionType },
-            { withCredentials: true }
-          )
-        : await axios.post(
-            `/api/article`,
-            { ...article, articleStatus: actionType },
-            {
-              withCredentials: true,
-            }
-          );
+    setLoading(true);
+    const result = editMode
+      ? await axios.put(
+          `/api/article`,
+          { ...article, slug: article.slug, articleStatus: actionType },
+          { withCredentials: true }
+        )
+      : await axios.post(
+          `/api/article`,
+          { ...article, articleStatus: actionType },
+          {
+            withCredentials: true,
+          }
+        );
 
-      if (result.data.status && result.data.data) {
-        setTimeout(() => (location.href = "/admin"), 3000);
-      } else {
-      }
-    } catch (err) {
-      console.error(err);
+    if (result.data.status && result.data.data) {
+      setMessage("博文保存成功");
+      setTimeout(() => (location.href = "/admin"), 3000);
+    } else {
+      setMessage(`博文保存失败: ${result.data.message}`);
     }
+    setLoading(false);
   };
   return (
     <header className="blog-title">
@@ -100,6 +111,26 @@ const EditorHeader = (props: {
         <MenuItem onClick={() => handleSubmit("published")}>发布博文</MenuItem>
         <MenuItem>删除博文</MenuItem>
       </Menu>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      <Snackbar
+        open={!!message}
+        autoHideDuration={6000}
+        onClose={() => setMessage("")}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          severity={message.includes("成功") ? "success" : "error"}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
     </header>
   );
 };
