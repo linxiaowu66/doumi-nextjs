@@ -14,6 +14,7 @@ import "./page.css";
 import { getArticleDetail } from "@/service/article";
 import CatalogComponent from "./Catalog";
 import Link from "next/link";
+import BlogPreview from "@/features/BlogPreview";
 
 interface Prop {
   params: {
@@ -63,7 +64,9 @@ const BlogDetail: React.FC<Prop> = async (props) => {
           <span>字数统计 {response.content.length}</span>
         </div>
       </section>
-      <section id="blog-detail"></section>
+      <section id="blog-detail">
+        <BlogPreview content={response.content} />
+      </section>
       <section className="micro-program">
         <h4>小程序关注一波~</h4>
         <Image

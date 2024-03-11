@@ -36,8 +36,8 @@ export async function GET(request: NextRequest) {
     +pageSize,
     order,
     queryTag,
-    queryCat,
     queryArch,
+    queryCat,
     articleStatus
   );
 
@@ -95,8 +95,8 @@ export const queryArticles = async (
   pageSize: number,
   order?: string | null,
   queryTag?: string | null,
-  queryCat?: string | null,
   queryArch?: string | null,
+  queryCat?: string | null,
   articleStatus?: string | null
 ) => {
   const AppDataSource = await getDataSource();
@@ -152,11 +152,11 @@ export const queryArticles = async (
       .getManyAndCount();
   } else if (queryCat) {
     whereQuery = {
-      where: { category: queryCat },
+      where: { category: { id: +queryCat } },
     };
   } else if (queryArch) {
     whereQuery = {
-      where: { archiveTime: queryArch },
+      where: { archiveTime: { archiveTime: queryArch } },
     };
   }
   if (articleStatus) {
@@ -177,6 +177,8 @@ export const queryArticles = async (
   if (!queryTag) {
     [list, count] = await repo.findAndCount(finalQuery);
   }
+
+  console.log("match the query result count:", count);
 
   return {
     list: list.map((item) => ({

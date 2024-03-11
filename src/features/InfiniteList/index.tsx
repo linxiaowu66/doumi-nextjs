@@ -39,6 +39,7 @@ export default function InfiniteList({
     const result = await axios.get<DouMiBlog.ArticleList>("/api/article", {
       params: {
         currentPage,
+        pageSize: 12,
         queryArch,
         queryCat,
         queryTag,
