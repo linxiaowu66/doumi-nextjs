@@ -2,7 +2,7 @@ import React from "react";
 import BlogContainer from "@/features/BlogContainer";
 import "./page.css";
 import InfiniteList from "@/features/InfiniteList";
-import { queryArticles } from "../api/article/route";
+import { queryArticles } from "@/service/article";
 import BlogPreview from "@/features/BlogPreview";
 import styles from "./index.module.css";
 

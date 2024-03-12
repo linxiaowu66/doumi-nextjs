@@ -1,9 +1,8 @@
 import BlogContainer from "@/features/BlogContainer";
 import styles from "./page.module.css";
 import InfiniteList from "@/features/InfiniteList";
-import { queryArticles } from "@/app/api/article/route";
+import { queryArticles } from "@/service/article";
 import { headers } from "next/headers";
-import BlogItem from "@/features/BlogItem";
 
 const BlogList = async () => {
   const heads = headers();

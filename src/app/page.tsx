@@ -3,7 +3,7 @@ import { Container } from "@mui/material";
 import { DouMiIntroduction } from "@/features/DoumiIntro";
 import DoumiLinks from "@/features/DoumiLink";
 import FootPrint from "@/features/Footprint";
-import { queryArticles } from "./api/article/route";
+import { queryArticles } from "@/service/article";
 import HottestArticles from "@/features/HottestArticles";
 
 export default async function Home() {

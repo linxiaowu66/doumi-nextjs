@@ -8,3 +8,9 @@
 ```
 pm2 start --name doumiblog pnpm -- start
 ```
+
+
+
+[Default Environment Variables](https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#default-environment-variables)
+
+[Route Segment Config](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config)
