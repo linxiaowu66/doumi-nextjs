@@ -1,9 +1,15 @@
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
+// import { logger } from "./logger";
 
 export default async function middleware(req: NextRequest) {
   // Get the pathname of the request (e.g. /, /protected)
   const path = req.nextUrl.pathname;
+
+  // Nextjs目前中间件只支持在Edge Runtime下使用，所以Nodejs的path模块无法使用，因此这里的logger.info会报错
+  // logger.info(
+  //   `Request path: ${req.nextUrl.pathname} with method: ${req.method} and query: `
+  // );
 
   // If it's the root path, just render it
   if (path === "/") {

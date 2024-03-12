@@ -137,7 +137,7 @@ export const queryArticles = async (
     [list, count] = await repo.findAndCount(finalQuery);
   }
 
-  console.log("match the query result count:", count);
+  logger.info(`match the query result count: ${count}`);
 
   return {
     list: list.map((item) => ({
