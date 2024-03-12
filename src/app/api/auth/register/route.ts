@@ -31,3 +31,4 @@ export async function POST(req: Request) {
     return NextResponse.json({ data: user, code: 200, message: "注册成功！" });
   }
 }
+export const dynamic = "force-dynamic";

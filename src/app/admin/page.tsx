@@ -27,3 +27,4 @@ const BlogAdmin: React.FC<void> = async () => {
 };
 
 export default BlogAdmin;
+export const dynamic = "force-dynamic";

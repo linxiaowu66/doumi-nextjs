@@ -267,3 +267,5 @@ const createOrUpdateArticle = async (
   // }
   return result;
 };
+
+export const dynamic = "force-dynamic";

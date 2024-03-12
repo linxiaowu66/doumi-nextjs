@@ -12,10 +12,10 @@ import {
 
 const AppDataSource = new DataSource({
   type: "mysql",
-  host: "localhost",
+  host: process.env.DB_HOST,
   port: 3306,
-  username: "test",
-  password: "test",
+  username: process.env.DB_USER, // 替换成你自己的用户名
+  password: process.env.DB_PASS, // 替换成你自己的密码
   database: "douMiBlog",
   synchronize: false,
   logging: false,

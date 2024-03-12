@@ -10,7 +10,7 @@ export const authOptions: NextAuthOptions = {
     maxAge: 24 * 60 * 60, // 24 hours
   },
   // 必须加这个，否则会报错：'JWEDecryptionFailed: decryption operation failed\n'
-  secret: "doumiblog", // process.env.AUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     // session会把下面的user信息塞到/api/auth/session里面，前端就会拿到用户信息
     session: async ({ session, token }) => {
@@ -57,3 +57,4 @@ export const authOptions: NextAuthOptions = {
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
+export const dynamic = "force-dynamic";

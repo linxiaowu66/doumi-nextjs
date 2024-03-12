@@ -17,3 +17,4 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json(result);
 }
+export const dynamic = "force-dynamic";
