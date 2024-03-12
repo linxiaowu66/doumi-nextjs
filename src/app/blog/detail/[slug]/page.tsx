@@ -88,7 +88,10 @@ const BlogDetail: React.FC<Prop> = async (props) => {
       <blockquote className="github">
         <p>
           网站源码：
-          <a href="https://github.com/linxiaowu66/doumi-blog" target="__blank">
+          <a
+            href="https://github.com/linxiaowu66/doumi-nextjs"
+            target="__blank"
+          >
             linxiaowu66 · 豆米的博客
           </a>
         </p>
