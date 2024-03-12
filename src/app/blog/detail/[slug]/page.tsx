@@ -15,6 +15,8 @@ import { getArticleDetail } from "@/service/article";
 import CatalogComponent from "./Catalog";
 import Link from "next/link";
 import BlogPreview from "@/features/BlogPreview";
+import BlogComment from "@/features/BlogComment";
+import { Metadata, ResolvingMetadata } from "next";
 
 interface Prop {
   params: {
@@ -98,8 +100,25 @@ const BlogDetail: React.FC<Prop> = async (props) => {
         </p>
       </blockquote>
       <CatalogComponent />
+      <BlogComment />
     </BlogContainer>
   );
 };
+
+export async function generateMetadata(
+  { params }: Prop,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { slug } = params;
+
+  const response = await getArticleDetail(slug, true);
+
+  return {
+    openGraph: {
+      title: response.title,
+    },
+    description: response.digest,
+  };
+}
 
 export default BlogDetail;
