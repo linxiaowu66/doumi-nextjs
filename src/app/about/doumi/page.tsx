@@ -16,14 +16,14 @@ const AboutDouMi = () => {
         <p className="detail-intro">
           <span>大洋芋</span>
           ：2012年毕业的豆，从一开始就投入到前端开发的行业中，一去不回头。工作地点曾经在深圳待过两年，之后辗转到杭州，公司也从吉祥腾达科技切换到阿里巴巴，
-          目前在家暂时带娃。回望7年工作以往，经历了前端行业剧变的年代，写过JQuery，处理过一大堆的浏览器兼容性。最后在所谓的互联网大厂中继续磨练，深谙React之道，经过鉴定，是个纯正的前端er。希望今年(2020年)可以找到自己热爱的一个新团体和新公司~
+          目前在杭州XX智能科技。回望前端工作生涯，经历了前端行业剧变的年代，写过JQuery，处理过一大堆的浏览器兼容性。深谙React之道，做事认真负责是她的个人标签，经过鉴定，是个纯正的前端er
         </p>
         <p className="detail-intro">
           <span>小米喳</span>
           ：同样2012年毕业的米，经历就多一些，一开始做的是交换机协议软件开发，焊过电路板，烧录过交换机芯片，各种折腾，纯粹为了满足自己的动手愿望。2014年与豆一起辗转到杭州，
           就职于诺基亚通信，这次玩的是LTE
           4G下行协议开发，玩玩天线、鼓捣鼓捣DSP，后来觉得太闲，果断转行到前端行业，
-          2016年8月至今(2020年1月)，也有三年前端经验了，搞前端，其实我不是“正经”的，我更加喜欢偏服务端上做前端，研究过Nodejs实现机制，写过众多工具库，捋过前端工程化，探讨过前端开发模式等等，目前就职于点我达，希望未来可以有更大的平台让自己施展更多抱负，serverless可能是一个方向哦~
+          2016年8月至今，依然在前端行业折腾，辗转多个行业和公司，从nodejs一路玩到3D，擅长设计复杂的项目架构，实现复杂的业务，一句话：就是爱挑战自己~~
         </p>
       </DouMiDetailItem>
       <DouMiDetailItem title="豆米标签">
@@ -48,16 +48,16 @@ const AboutDouMi = () => {
           <div className="category">
             <div>
               大洋芋：<span>React</span>
-              <span>Broswer</span>
+              <span>浏览器兼容性</span>
               <span>中后台</span>
-              <span>JQuery</span>
+              <span>SSR</span>
             </div>
             <div>
               小米喳：<span>React</span>
               <span>Nodejs</span>
-              <span>Hybrid</span>
-              <span>Express.js</span>
-              <span>Websocket</span>
+              <span>WebGL</span>
+              <span>GIS/Canvas</span>
+              <span>前端管理</span>
             </div>
           </div>
         </div>
@@ -81,7 +81,7 @@ const AboutDouMi = () => {
       </DouMiDetailItem>
       <DouMiDetailItem title="赞赏豆米">
         <p className="doumi-reward-tip">
-          如果觉得博客还不错，可以请作者喝杯咖啡哦~
+          如果觉得博客还不错，欢迎Fork，顺便请作者喝杯咖啡哦~
         </p>
         <div className="doumi-reward">
           <Image
