@@ -1,9 +1,11 @@
 import { AwesomeHelp } from "awesome-js";
 import { headers } from "next/headers";
 import { getDataSource } from "@/database";
-import { Reader, Website } from "@/database/entities";
+import { Archive, Reader, Website } from "@/database/entities";
 import { logger } from "@/logger";
 import dayjs from "dayjs";
+import { MoreThanOrEqual } from "typeorm";
+import { Category } from "@/database/entities";
 
 export const updateArticleStatictics = async (slug: string) => {
   const header = headers();
@@ -108,5 +110,49 @@ export async function getWebsiteSummaryData() {
     operationDays: `${operationDays}天`,
     totalPv: totalPv.sum,
     totalUv: totalUv.sum,
+  };
+}
+
+export async function fetchWebsiteStatistics() {
+  const AppDataSource = await getDataSource();
+  const repo = AppDataSource.getRepository(Website);
+  const archiveRepo = AppDataSource.getRepository(Archive);
+  const catRepo = AppDataSource.getRepository(Category);
+
+  const results = await repo.find({
+    where: {
+      // 查询最近7天的数据
+      createdAt: MoreThanOrEqual(dayjs().subtract(7, "day").toDate()),
+    },
+  });
+
+  const archiveResult = await archiveRepo.find({
+    where: {
+      // 查询最近一年的数据
+      createdAt: MoreThanOrEqual(dayjs().subtract(365, "day").toDate()),
+    },
+    relations: ["articles"],
+  });
+
+  const catRes = await catRepo.find({ relations: ["articles"] });
+
+  return {
+    visitData: results,
+    catData: catRes.map((item) => ({
+      id: item.id,
+      name: item.name,
+      value: item.articles.length,
+    })),
+    archiveData: archiveResult
+      .map((item) => ({
+        id: item.id,
+        archiveTime: item.archiveTime,
+        name: "", // fix lint error
+        articlesCount: item.articles.length,
+      }))
+      .sort(
+        (a, b) =>
+          new Date(b.archiveTime).getTime() - new Date(a.archiveTime).getTime()
+      ),
   };
 }

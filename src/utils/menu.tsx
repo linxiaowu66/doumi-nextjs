@@ -56,6 +56,11 @@ export const navigatorListWithLogin = [
     link: "/admin",
   },
   {
+    name: "数据",
+    subName: "Data",
+    link: "/admin/data",
+  },
+  {
     name: "退出",
     subName: "Exit",
     icon: <ExitToApp />,
