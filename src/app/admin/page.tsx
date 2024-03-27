@@ -13,7 +13,7 @@ const BlogAdmin: React.FC<void> = async () => {
     <BlogContainer isLogin contentClass="blog-admin-container">
       <div className="blog-admin-wrapper">
         <section className="blog-list-container">
-          <InfiniteList initialPosts={result} isLogin />
+          <InfiniteList initialPosts={result} />
         </section>
         <section className="blog-content">
           <BlogPreview

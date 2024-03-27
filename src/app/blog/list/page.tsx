@@ -3,6 +3,8 @@ import styles from "./page.module.css";
 import InfiniteList from "@/features/InfiniteList";
 import { queryArticles } from "@/service/article";
 import { headers } from "next/headers";
+import { Pagination } from "@mui/material";
+import BlogPagination from "@/features/BlogPagination";
 
 const BlogList = async () => {
   const heads = headers();
@@ -14,7 +16,7 @@ const BlogList = async () => {
   const queryTag = searchParams.get("queryTag");
   const result = await queryArticles(
     1,
-    12,
+    6,
     null,
     queryTag,
     queryArch,
@@ -24,17 +26,12 @@ const BlogList = async () => {
 
   return (
     <BlogContainer contentClass={styles.blogListWrapper}>
-      <section
-        className={styles.blogListContainer}
-        //   ref={(ref) => (blogListContainer = ref)}
-      >
-        <InfiniteList
-          initialPosts={result}
-          queryArch={queryArch}
-          queryCat={queryCat}
-          queryTag={queryTag}
-        />
-      </section>
+      <BlogPagination
+        initialPosts={result}
+        queryArch={queryArch}
+        queryCat={queryCat}
+        queryTag={queryTag}
+      />
     </BlogContainer>
   );
 };

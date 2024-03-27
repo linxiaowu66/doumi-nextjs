@@ -1,5 +1,12 @@
 export const WebsiteChangelog = [
   {
+    title: "博客数据",
+    desc1: "博客数据统计迁移至后台，改用echarts实现",
+    desc2: "优化一些功能bug",
+    date: "2024/03",
+    time: "27 周三",
+  },
+  {
     title: "博客迁移",
     desc1: "由之前的Malagu框架迁移到Nextjs框架，适配SSR",
     desc2: "优化一些页面的展示，将数据报表页面挪到后台",
