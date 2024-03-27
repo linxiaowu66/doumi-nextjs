@@ -40,3 +40,9 @@ pm2 start --name doumiblog pnpm -- start
 ```
 
 > 部署相关文章参考博客：
+
+
+## 待办
+
+- [ ] 目前的markdown对于一些代码的解析以及引用的样式不好看，优化一下；
+- [ ] 对比lighthouse进行极限优化
