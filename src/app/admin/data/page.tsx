@@ -7,7 +7,7 @@ import CustomBarChart from "@/features/PieChart";
 const BlogData: React.FC<void> = async () => {
   const response = await fetchWebsiteStatistics();
 
-  const { visitData, archiveData, catData } = response;
+  const { visitData, archiveData, catData, tagData } = response;
 
   const days = visitData.map((item) => item.date);
   const pvs = visitData.map((item) => item.todayPv);
@@ -15,7 +15,11 @@ const BlogData: React.FC<void> = async () => {
 
   return (
     <BlogContainer isLogin contentClass="statistics-container">
-      <div className="chart-item flex-basis-50">
+      <div className="chart-item flex-basis-100">
+        <header className="header">
+          <span>近十五日网站访问量</span>
+          <span>LAST 15 DAYS</span>
+        </header>
         <LineOrBarChart
           style={{
             paddingTop: "1.56vw",
@@ -28,7 +32,7 @@ const BlogData: React.FC<void> = async () => {
               name: "访问次数",
               yAxisLabel: "访问次数",
               value: pvs,
-              lrColors: ["rgba(13, 204, 255, 1)", "rgba(71, 96, 255, 1)"],
+              lrColors: ["#90f0bf", "#17d172"],
             },
             {
               type: "line",
@@ -36,12 +40,16 @@ const BlogData: React.FC<void> = async () => {
               name: "访问用户",
               yAxisLabel: "访问用户",
               value: uvs,
-              lrColors: ["rgba(100, 188, 255, 0.8)", "rgba(108, 226, 255, 0)"],
+              lrColors: ["rgba(62, 223, 140, 0.5)", "rgba(62, 223, 140, 0)"],
             },
           ]}
         />
       </div>
-      <div className="chart-item flex-basis-50">
+      <div className="chart-item flex-basis-100">
+        <header className="header">
+          <span>近一年文章创作量</span>
+          <span>LAST 365 DAYS</span>
+        </header>
         <LineOrBarChart
           style={{
             paddingTop: "1.56vw",
@@ -54,19 +62,39 @@ const BlogData: React.FC<void> = async () => {
               name: "发表的文章个数",
               yAxisLabel: "文章个数",
               value: pvs,
-              lrColors: ["rgba(13, 204, 255, 1)", "rgba(71, 96, 255, 1)"],
+              lrColors: ["#90f0bf", "#17d172"],
             },
           ]}
         />
       </div>
       <div className="chart-item flex-basis-50">
+        <header className="header">
+          <span>文章分类</span>
+          <span>TOTAL ARTICLES CATEGORY</span>
+        </header>
         <CustomBarChart
-          chartName="车辆状况"
+          chartName="文章总数"
           data={catData}
-          style={{ height: "25.925vh" }}
+          style={{ height: "30.925vh", marginBottom: "1.56vw" }}
           legendConfig={{
             right: "6.49%",
-            top: "25%",
+            top: "35%",
+            align: "right",
+          }}
+        />
+      </div>
+      <div className="chart-item flex-basis-50">
+        <header className="header">
+          <span>文章标签最多的前六个</span>
+          <span>AHEAD ARTICLES TAG</span>
+        </header>
+        <CustomBarChart
+          chartName="文章总数"
+          data={tagData}
+          style={{ height: "30.925vh", marginBottom: "1.56vw" }}
+          legendConfig={{
+            right: "6.49%",
+            top: "35%",
             align: "right",
           }}
         />

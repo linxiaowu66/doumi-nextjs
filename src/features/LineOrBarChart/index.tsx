@@ -191,7 +191,7 @@ const LineOrBarChart = (props: {
           }
           return {
             ...lineChartDefaultConfig,
-            itemStyle: { color: item.lineColor || "#64BCFF" },
+            itemStyle: { color: item.lineColor || "rgb(62, 223, 140)" },
             name: item.name,
             areaStyle: {
               opacity: 0.8,

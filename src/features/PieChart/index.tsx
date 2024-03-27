@@ -13,45 +13,13 @@ import { CanvasRenderer } from "echarts/renderers";
 import { useEffect, useRef } from "react";
 import { debounce } from "lodash-es";
 
-import { deepMerge } from "@/utils";
-
-const themeColor: any = {
-  light: {
-    label: "#37394F",
-    tooltip: {
-      text: "#37394F",
-      border: "#C2D4E4",
-      background: "rgba(255, 255, 255, 0.9)",
-    },
-    yAxis: {
-      nameText: "#6D7177",
-    },
-  },
-  dark: {
-    label: "#E9EBFE",
-    tooltip: {
-      text: "#E9EBFE",
-      border: "rgba(84, 182, 254, 0.5)",
-      background: "rgba(40, 41, 59, 0.9)",
-    },
-    yAxis: {
-      nameText: "#9496AC",
-    },
-  },
-};
-
 const CustomPieChart = ({
   style,
   chartName,
-  graphic,
   data,
-  theme = "light",
   notMerge = true,
   loading = false,
   legendConfig = {},
-  seriesConfig = {},
-  tooltipConfig = {},
-  chartOtherConfig = {},
 }: any) => {
   const chartRef = useRef<ReactEChartsCore>(null);
   echarts.use([
@@ -85,46 +53,38 @@ const CustomPieChart = ({
     <ReactEChartsCore
       ref={chartRef}
       echarts={echarts}
-      theme={theme}
       style={style}
       showLoading={loading}
       shouldSetOption={() => true} // 在请求不到数据的时候将echarts图进行清空
       notMerge={notMerge} // 决定了是否进行选项merge，如果不merge的话，当我关掉某个图例的话因为数据一直刷新导致配置又被冲掉了
       lazyUpdate
-      option={deepMerge(chartOtherConfig, {
-        tooltip: deepMerge(tooltipConfig, {
+      option={{
+        tooltip: {
           trigger: "item",
           textStyle: {
-            color: themeColor[theme].tooltip.text,
+            color: "#37394F",
+            fontSize: 14,
           },
-          borderColor: themeColor[theme].tooltip.border,
-          backgroundColor: themeColor[theme].tooltip.background,
-        }),
-        legend: deepMerge(legendConfig, {
-          show: true,
-          orient: "vertical",
-          icon: "circle",
-          right: 10,
-          top: "25%",
-          textStyle: { fontSize: "0.729vw" },
-          formatter: (name: string) =>
-            `${name} ${data.find((it) => it.name === name)?.value}`,
-        }),
-        graphic: !graphic
-          ? []
-          : graphic.map((item) => ({
-              type: "text",
-              left: "center",
-              top: item.top,
-              style: {
-                textAlign: "center",
-                text: item.text,
-                fill: item.color,
-                fontSize: item.fontSize,
-              },
-            })),
+          backgroundColor: "rgba(255, 255, 255, 1)",
+          borderColor: "#64BCFF",
+        },
+        legend: {
+          ...legendConfig,
+          ...{
+            show: true,
+            orient: "vertical",
+            icon: "circle",
+            right: 10,
+            top: "25%",
+            textStyle: { fontSize: "0.729vw" },
+            formatter: (name: string) =>
+              `${name} ${
+                data.find((it: { name: string }) => it.name === name)?.value
+              }`,
+          },
+        },
         series: [
-          deepMerge(seriesConfig, {
+          {
             name: chartName,
             type: "pie",
             radius: ["50%", "80%"],
@@ -137,30 +97,37 @@ const CustomPieChart = ({
             labelLine: {
               show: false,
             },
-            data: data.map((item) => ({
-              value: item.value,
-              name: item.name,
-              tooltip: {
-                formatter: item.tooltipFormatter,
-              },
-              itemStyle: {
-                color: Array.isArray(item.lrColors)
-                  ? new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                      {
-                        offset: 0,
-                        color: item.lrColors[0],
-                      },
-                      {
-                        offset: 1,
-                        color: item.lrColors[1],
-                      },
-                    ])
-                  : item.lrColors,
-              },
-            })),
-          }),
+            data: data.map(
+              (item: {
+                name: string;
+                value: number | string;
+                lrColors?: string[] | string;
+                tooltipFormatter?: (params: any) => string;
+              }) => ({
+                value: item.value,
+                name: item.name,
+                tooltip: {
+                  formatter: item.tooltipFormatter,
+                },
+                itemStyle: {
+                  color: Array.isArray(item.lrColors)
+                    ? new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                        {
+                          offset: 0,
+                          color: item.lrColors[0],
+                        },
+                        {
+                          offset: 1,
+                          color: item.lrColors[1],
+                        },
+                      ])
+                    : item.lrColors,
+                },
+              })
+            ),
+          },
         ],
-      })}
+      }}
     />
   );
 };
