@@ -6,6 +6,7 @@ import theme from "../theme";
 import { NextAuthProvider } from "./providers";
 import "./globals.css";
 import StoreProvider from "./StoreProvider";
+import "github-markdown-css/github-markdown.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

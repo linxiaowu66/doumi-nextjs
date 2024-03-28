@@ -2,6 +2,7 @@
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import remarkGfm from "remark-gfm";
 import styles from "./index.module.css";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "@/lib/hooks";
@@ -20,6 +21,7 @@ const BlogPreview = (props: { content: string; className?: string }) => {
 
   return (
     <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
       components={{
         code(props) {
           const { children, className, node, ...rest } = props;
@@ -30,6 +32,7 @@ const BlogPreview = (props: { content: string; className?: string }) => {
               PreTag="div"
               language={match[1]}
               style={atomDark}
+              showLineNumbers
             >
               {String(children).replace(/\n$/, "")}
             </SyntaxHighlighter>
@@ -47,7 +50,7 @@ const BlogPreview = (props: { content: string; className?: string }) => {
           );
         },
       }}
-      className={`${styles.articleMarkdownContent} ${className}`}
+      className={`${styles.articleMarkdownContent} ${className} markdown-body`}
     >
       {article}
     </ReactMarkdown>

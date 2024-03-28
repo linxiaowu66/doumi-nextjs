@@ -6,34 +6,6 @@
   max-width: 100%;
 }
 
-.articleMarkdownContent p {
-  font-size: 14px;
-}
-
-.articleMarkdownContent h6 {
-  font-size: 14px;
-}
-
-.articleMarkdownContent h5 {
-  font-size: 16px;
-}
-
-.articleMarkdownContent h4 {
-  font-size: 18px;
-}
-
-.articleMarkdownContent h3 {
-  font-size: 20px;
-}
-
-.articleMarkdownContent h2 {
-  font-size: 24px;
-}
-
-.articleMarkdownContent h1 {
-  font-size: 28px;
-}
-
 .articleMarkdownContent table {
   border: 1px solid #d0d6d7;
   border-collapse: collapse;
