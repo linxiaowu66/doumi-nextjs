@@ -46,3 +46,4 @@ pm2 start --name doumiblog pnpm -- start
 
 * [x] 目前的markdown对于一些代码的解析以及引用的样式不好看，优化一下；
 * [ ] 对比lighthouse进行极限优化
+* [ ] 使用两个layout文件，而不需要每个文件都放BlogContainer组件
