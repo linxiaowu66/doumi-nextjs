@@ -179,7 +179,7 @@ export async function fetchWebsiteStatistics() {
       }))
       .sort(
         (a, b) =>
-          new Date(b.archiveTime).getTime() - new Date(a.archiveTime).getTime()
+          new Date(a.archiveTime).getTime() - new Date(b.archiveTime).getTime()
       ),
     tagData: tagRes
       .map((item) => ({
