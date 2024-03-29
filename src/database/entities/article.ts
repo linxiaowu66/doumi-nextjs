@@ -52,7 +52,7 @@ export class Article {
   // 博文摘要，这次需要自己填写，不再自动从文章采集字符了，那样实现不准确
   @Column({
     type: "varchar",
-    length: 200,
+    length: 300,
     nullable: false,
   })
   digest: string;

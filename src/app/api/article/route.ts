@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/route";
 import { createOrUpdateArticle, queryArticles } from "@/service/article";
+import { logger } from "@/logger";
 
 // 查询所有文章列表
 // 支持查询最热门的文章：
@@ -46,15 +47,24 @@ export async function POST(request: NextRequest) {
       },
     });
   }
-  const result = await createOrUpdateArticle(article, session.user.email);
+  try {
+    const result = await createOrUpdateArticle(article, session.user.email);
 
-  return NextResponse.json({
-    status: 1,
-    data: {
-      msg: article.articleStatus === "draft" ? "保存草稿成功" : "发布成功",
-      slug: (result as Article).slug,
-    },
-  });
+    return NextResponse.json({
+      status: 1,
+      data: {
+        msg: article.articleStatus === "draft" ? "保存草稿成功" : "发布成功",
+        slug: (result as Article).slug,
+      },
+    });
+  } catch (err) {
+    logger.error(`新建【${article?.title}】文章失败，${err}`);
+    return NextResponse.json({
+      status: 0,
+      data: null,
+      message: "新建文章失败",
+    });
+  }
 }
 
 // 编辑文章
@@ -70,14 +80,24 @@ export async function PUT(request: NextRequest) {
     });
   }
 
-  await createOrUpdateArticle(article, session.user.email, true);
+  try {
+    await createOrUpdateArticle(article, session.user.email, true);
 
-  return NextResponse.json({
-    status: 1,
-    data: {
-      msg: article.articleStatus === "draft" ? "更新草稿成功" : "更新发布成功",
-    },
-  });
+    return NextResponse.json({
+      status: 1,
+      data: {
+        msg:
+          article.articleStatus === "draft" ? "更新草稿成功" : "更新发布成功",
+      },
+    });
+  } catch (err) {
+    logger.error(`更新【${article?.title}】文章失败，${err}`);
+    return NextResponse.json({
+      status: 0,
+      data: null,
+      message: "更新文章失败",
+    });
+  }
 }
 
 export const dynamic = "force-dynamic";

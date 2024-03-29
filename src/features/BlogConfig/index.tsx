@@ -76,6 +76,8 @@ export default function BlogConfig(props: BlogConfigProps) {
             value={article.illustration}
             fullWidth
             onChange={(e) => handleChange({ illustration: e.target.value })}
+            inputProps={{ maxLength: 200 }}
+            placeholder="最多200个字符"
           />
           <TextField
             className={styles.formControl}
@@ -87,6 +89,8 @@ export default function BlogConfig(props: BlogConfigProps) {
             value={article.digest}
             fullWidth
             onChange={(e) => handleChange({ digest: e.target.value })}
+            inputProps={{ maxLength: 300 }}
+            placeholder="最多300个字符"
           />
           <FormControl className={styles.formControl} fullWidth>
             <InputLabel id="demo-mutiple-name-label">文章标签</InputLabel>
