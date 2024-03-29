@@ -65,7 +65,11 @@ export default function BlogConfig(props: BlogConfigProps) {
                   ? dayjs()
                   : dayjs(article.archiveTime)
               }
-              onChange={(newValue) => handleChange({ archiveTime: newValue })}
+              onChange={(newValue) =>
+                handleChange({
+                  archiveTime: dayjs(newValue).format("YYYY-MM-DD"),
+                })
+              }
             />
           </LocalizationProvider>
           <TextField
