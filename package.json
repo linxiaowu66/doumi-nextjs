@@ -41,6 +41,7 @@
     "react-syntax-highlighter": "^15.5.0",
     "reflect-metadata": "^0.2.1",
     "remark-gfm": "^4.0.0",
+    "sharp": "^0.33.3",
     "typeorm": "^0.3.20",
     "winston": "^3.11.0",
     "winston-daily-rotate-file": "^5.0.0"

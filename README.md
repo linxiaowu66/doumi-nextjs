@@ -47,3 +47,4 @@ pm2 start --name doumiblog pnpm -- start
 * [x] 目前的markdown对于一些代码的解析以及引用的样式不好看，优化一下；
 * [ ] 对比lighthouse进行极限优化
 * [ ] 使用两个layout文件，而不需要每个文件都放BlogContainer组件
+* [ ] 思考一种方式进行api的异步错误捕获，并统一返回数据结构
