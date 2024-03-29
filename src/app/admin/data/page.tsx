@@ -61,7 +61,7 @@ const BlogData: React.FC<void> = async () => {
               yAxisIndex: 0,
               name: "发表的文章个数",
               yAxisLabel: "文章个数",
-              value: pvs,
+              value: archiveData.map((item) => item.articlesCount),
               lrColors: ["#90f0bf", "#17d172"],
             },
           ]}

@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from "typeorm";
 
 // 只会保存7天内的数据
 
@@ -7,31 +13,32 @@ export class Website {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('bigint')
+  @Column("bigint")
   todayUv: number;
 
-  @Column('simple-array')
+  @Column("simple-array")
   todayIps: string[];
 
-  @Column('bigint')
+  @Column("bigint")
   todayPv: number;
 
-  @Column('bigint')
+  @Column("bigint")
   yesterdayPv: number;
 
-  @Column('bigint')
+  @Column("bigint")
   yesterdayUv: number;
 
-  @Column('bigint')
+  @Column("bigint")
   totalUv: number;
 
-  @Column('bigint')
+  @Column("bigint")
   totalPv: number;
 
   @Column({
-    type: 'varchar',
+    type: "varchar",
     length: 200,
-    nullable: false
+    nullable: false,
+    unique: true, // 设置唯一
   })
   date: string;
 

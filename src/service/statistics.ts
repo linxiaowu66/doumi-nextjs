@@ -60,33 +60,57 @@ export const updateWebsiteStatistics = async () => {
   const AppDataSource = await getDataSource();
   const now = AwesomeHelp.convertDate(new Date(), "YYYY-MM-DD");
 
-  const repo = AppDataSource.getRepository(Website);
+  // create a new query runner
+  const queryRunner = AppDataSource.createQueryRunner();
 
-  // 查找数据库中是否存在今天的数据
-  // TODO: 从这里到后面的新建表如何控制并发，目前出现过0点的同时有访问过来，导致多创建了同日期的一行数据
-  const website = await repo.findOne({ where: { date: now } });
+  // establish real database connection using our new query runner
+  await queryRunner.connect();
 
-  if (website) {
-    if (!website.todayIps.includes(reqIp)) {
-      website.todayIps.push(reqIp);
-      website.todayPv = +website.todayPv + 1;
-      website.todayUv = +website.todayUv + 1;
+  // now we can execute any queries on a query runner, for example:
+  const website = await queryRunner.manager.findOne(Website, {
+    where: { date: now },
+  });
+
+  // lets now open a new transaction:
+  await queryRunner.startTransaction();
+
+  // 避免并发操作
+  logger.info(
+    `${reqIp} visit and the record of website is exist? ${website?.id}`
+  );
+
+  try {
+    if (website) {
+      if (!website.todayIps.includes(reqIp)) {
+        website.todayIps.push(reqIp);
+        website.todayPv = +website.todayPv + 1;
+        website.todayUv = +website.todayUv + 1;
+      } else {
+        website.todayPv = +website.todayPv + 1;
+      }
+      await queryRunner.manager.update(Website, website.id, website);
     } else {
-      website.todayPv = +website.todayPv + 1;
+      const newData = new Website();
+      newData.todayIps = [reqIp];
+      newData.todayPv = 1;
+      newData.todayUv = 1;
+      // 历史数据初始化，忽略即可
+      newData.yesterdayPv = 0;
+      newData.yesterdayUv = 0;
+      newData.totalPv = 0;
+      newData.totalUv = 0;
+      newData.date = now;
+      await queryRunner.manager.save(Website, newData);
     }
-    repo.save(website);
-  } else {
-    const newData = new Website();
-    newData.todayIps = [reqIp];
-    newData.todayPv = 1;
-    newData.todayUv = 1;
-    // 历史数据初始化，忽略即可
-    newData.yesterdayPv = 0;
-    newData.yesterdayUv = 0;
-    newData.totalPv = 0;
-    newData.totalUv = 0;
-    newData.date = now;
-    await repo.save(newData);
+
+    // commit transaction now:
+    await queryRunner.commitTransaction();
+  } catch (err) {
+    // since we have errors let's rollback changes we made
+    await queryRunner.rollbackTransaction();
+  } finally {
+    // you need to release query runner which is manually created:
+    await queryRunner.release();
   }
 };
 
