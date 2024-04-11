@@ -42,9 +42,9 @@ export async function getArticleDetail(
 
   return {
     ...result,
-    tags: result.tags.map((it) => it.name),
-    category: result.category.name,
-    catId: result.category.id,
+    tags: result.tags && result.tags.map((it) => it.name),
+    category: result.category && result.category.name,
+    catId: result.category && result.category.id,
     archiveTime: result.fullArchiveTime,
     author: result.author.username,
   };
