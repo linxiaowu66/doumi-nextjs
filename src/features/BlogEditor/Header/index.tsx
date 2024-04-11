@@ -57,11 +57,13 @@ const EditorHeader = (props: {
       !article.tags
     ) {
       setMessage("博文配置信息请补全后再提交");
+      setLoading(false);
       return;
     }
 
     if (!article.title) {
       setMessage("博文标题必填");
+      setLoading(false);
       return;
     }
 
