@@ -142,8 +142,8 @@ export const queryArticles = async (
   return {
     list: list.map((item) => ({
       ...item,
-      tags: item.tags.map((it) => it.name),
-      category: item.category.name,
+      tags: item.tags && item.tags.map((it) => it.name),
+      category: item.category && item.category.name,
       archiveTime: item.fullArchiveTime,
       author: item.author.username,
     })),

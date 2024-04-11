@@ -82,6 +82,7 @@ export default function BlogConfig(props: BlogConfigProps) {
             onChange={(e) => handleChange({ illustration: e.target.value })}
             inputProps={{ maxLength: 200 }}
             placeholder="最多200个字符"
+            required
           />
           <TextField
             className={styles.formControl}
@@ -95,6 +96,7 @@ export default function BlogConfig(props: BlogConfigProps) {
             onChange={(e) => handleChange({ digest: e.target.value })}
             inputProps={{ maxLength: 300 }}
             placeholder="最多300个字符"
+            required
           />
           <FormControl className={styles.formControl} fullWidth>
             <InputLabel id="demo-mutiple-name-label">文章标签</InputLabel>
@@ -106,6 +108,7 @@ export default function BlogConfig(props: BlogConfigProps) {
               onChange={(event) => handleChange({ tags: event.target.value })}
               input={<Input />}
               MenuProps={MenuProps}
+              required
             >
               {props.tags.map((name) => (
                 <MenuItem
@@ -129,6 +132,7 @@ export default function BlogConfig(props: BlogConfigProps) {
               }
               input={<Input />}
               MenuProps={MenuProps}
+              required
             >
               {props.cats.map((name) => (
                 <MenuItem

@@ -48,6 +48,23 @@ const EditorHeader = (props: {
   };
   const handleSubmit = async (actionType: "published" | "draft") => {
     setLoading(true);
+
+    if (
+      !article.archiveTime ||
+      !article.category ||
+      !article.digest ||
+      !article.illustration ||
+      !article.tags
+    ) {
+      setMessage("博文配置信息请补全后再提交");
+      return;
+    }
+
+    if (!article.title) {
+      setMessage("博文标题必填");
+      return;
+    }
+
     const result = editMode
       ? await axios.put(
           `/api/article`,
@@ -64,7 +81,9 @@ const EditorHeader = (props: {
 
     if (result.data.status && result.data.data) {
       setMessage("博文保存成功");
-      setTimeout(() => (location.href = "/admin"), 3000);
+      if (!editMode) {
+        setTimeout(() => (location.href = "/admin"), 3000);
+      }
     } else {
       setMessage(`博文保存失败: ${result.data.message}`);
     }
@@ -84,6 +103,7 @@ const EditorHeader = (props: {
             setArticle({ article: { ...article, title: e.target.value } })
           );
         }}
+        required
       />
       <Settings
         className="toggle-setting"
