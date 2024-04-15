@@ -7,6 +7,9 @@ import rehypeRaw from "rehype-raw";
 import styles from "./index.module.css";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "@/lib/hooks";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import "katex/dist/katex.min.css";
 
 const BlogPreview = (props: { content: string; className?: string }) => {
   const { content, className } = props;
@@ -22,8 +25,8 @@ const BlogPreview = (props: { content: string; className?: string }) => {
 
   return (
     <ReactMarkdown
-      remarkPlugins={[remarkGfm]}
-      rehypePlugins={[rehypeRaw]}
+      remarkPlugins={[remarkGfm, remarkMath]}
+      rehypePlugins={[rehypeRaw, rehypeKatex]}
       components={{
         code(props) {
           const { children, className, node, ...rest } = props;
