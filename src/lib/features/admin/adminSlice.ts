@@ -8,7 +8,7 @@ interface adminState {
 }
 const initialState: adminState = {
   articleContent: "",
-  searchArticleName: "",
+  searchArticleName: undefined,
 };
 
 export const adminSlice = createSlice({

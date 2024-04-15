@@ -53,10 +53,9 @@ export default function InfiniteList({
   };
 
   useEffect(() => {
-    if (searchArticleName) {
+    if (searchArticleName !== undefined) {
+      // 首次进来是undefined，不执行查询，只有真正搜索过才进行查询
       fetchBlogList(1, searchArticleName);
-    } else {
-      fetchBlogList(1);
     }
   }, [searchArticleName]);
 
