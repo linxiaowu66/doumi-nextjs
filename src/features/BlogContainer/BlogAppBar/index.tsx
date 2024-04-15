@@ -55,7 +55,7 @@ export default function BlogAppBar(props: AppBarProps) {
             );
           })}
         </div>
-        <BlogSearch />
+        <BlogSearch isLogin={isLogin || false} />
       </div>
     </header>
   );

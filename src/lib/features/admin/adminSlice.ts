@@ -4,9 +4,11 @@ import { RootState } from "../../store";
 
 interface adminState {
   articleContent: string;
+  searchArticleName?: string;
 }
 const initialState: adminState = {
   articleContent: "",
+  searchArticleName: "",
 };
 
 export const adminSlice = createSlice({
@@ -17,9 +19,15 @@ export const adminSlice = createSlice({
     setContent: (state, action: PayloadAction<adminState>) => {
       state.articleContent = action.payload.articleContent;
     },
+    setSearchArticleName: (
+      state,
+      action: PayloadAction<Pick<adminState, "searchArticleName">>
+    ) => {
+      state.searchArticleName = action.payload.searchArticleName;
+    },
   },
 });
 
 export const selectAdmin = (state: RootState) => state.admin;
-export const { setContent } = adminSlice.actions;
+export const { setContent, setSearchArticleName } = adminSlice.actions;
 export default adminSlice.reducer;

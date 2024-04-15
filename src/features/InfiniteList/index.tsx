@@ -1,10 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import axios from "axios";
 import { DouMiBlog } from "@/interface";
 import BlogItemCard from "../BlogItemCard";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setContent } from "@/lib/features/admin/adminSlice";
 
 export default function InfiniteList({
@@ -24,23 +24,41 @@ export default function InfiniteList({
   const [selectedArticle, setSelectedArticle] = useState<string>(
     initialPosts.list[0].slug
   );
+  const searchArticleName = useAppSelector(
+    (state) => state.admin.searchArticleName
+  );
   const dispatch = useAppDispatch();
 
-  const fetchBlogList = async (currentPage: number) => {
+  const fetchBlogList = async (currentPage: number, queryTitle?: string) => {
     const result = await axios.get<DouMiBlog.ArticleList>("/api/article", {
       params: {
         currentPage,
         pageSize: 12,
+        articleName: queryTitle,
       },
     });
     if (result !== undefined) {
-      setBlogList([...blogList, ...result.data.list]);
+      setBlogList(
+        queryTitle ? result.data.list : [...blogList, ...result.data.list]
+      );
+      if (queryTitle) {
+        setSelectedArticle(result.data.list[0].slug);
+        dispatch(setContent({ articleContent: result.data.list[0].content }));
+      }
       setPageCount(result.data.pageCount);
       setCurrentPage(result.data.currentPage);
 
       return;
     }
   };
+
+  useEffect(() => {
+    if (searchArticleName) {
+      fetchBlogList(1, searchArticleName);
+    } else {
+      fetchBlogList(1);
+    }
+  }, [searchArticleName]);
 
   const loadMore = async () => {
     // 这里的loadMore貌似没有什么作用，页面加载好了之后会一次性拉取所有的数据！

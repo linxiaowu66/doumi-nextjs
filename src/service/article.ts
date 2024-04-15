@@ -56,7 +56,8 @@ export const queryArticles = async (
   queryTag?: string | null,
   queryArch?: string | null,
   queryCat?: string | null,
-  articleStatus?: string | null
+  articleStatus?: string | null,
+  articleName?: string | null
 ) => {
   const AppDataSource = await getDataSource();
   const repo = AppDataSource.getRepository(Article);
@@ -123,6 +124,14 @@ export const queryArticles = async (
       where: {
         ...(whereQuery as any).where,
         articleStatus: articleStatus,
+      },
+    };
+  }
+  if (articleName) {
+    whereQuery = {
+      where: {
+        ...(whereQuery as any).where,
+        title: articleName,
       },
     };
   }

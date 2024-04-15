@@ -21,6 +21,7 @@ export async function GET(request: NextRequest) {
   const queryCat = request.nextUrl.searchParams.get("queryCat");
   const queryArch = request.nextUrl.searchParams.get("queryArch");
   const articleStatus = request.nextUrl.searchParams.get("articleStatus");
+  const articleName = request.nextUrl.searchParams.get("articleName");
 
   const res = await queryArticles(
     +currentPage,
@@ -29,7 +30,8 @@ export async function GET(request: NextRequest) {
     queryTag,
     queryArch,
     queryCat,
-    articleStatus
+    articleStatus,
+    articleName
   );
 
   return NextResponse.json(res);
