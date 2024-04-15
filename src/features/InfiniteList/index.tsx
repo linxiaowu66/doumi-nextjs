@@ -39,9 +39,11 @@ export default function InfiniteList({
     });
     if (result !== undefined) {
       setBlogList(
-        queryTitle ? result.data.list : [...blogList, ...result.data.list]
+        currentPage === 1
+          ? result.data.list
+          : [...blogList, ...result.data.list]
       );
-      if (queryTitle) {
+      if (currentPage === 1) {
         setSelectedArticle(result.data.list[0].slug);
         dispatch(setContent({ articleContent: result.data.list[0].content }));
       }
@@ -61,7 +63,9 @@ export default function InfiniteList({
 
   const loadMore = async () => {
     // 这里的loadMore貌似没有什么作用，页面加载好了之后会一次性拉取所有的数据！
-
+    if (searchArticleName && searchArticleName.length) {
+      return;
+    }
     await fetchBlogList(+currentPage + 1);
   };
 

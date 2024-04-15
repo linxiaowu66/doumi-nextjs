@@ -11,7 +11,7 @@ import { setSearchArticleName } from "@/lib/features/admin/adminSlice";
 
 const BlogSearch = (props: { isLogin: boolean }) => {
   const { isLogin } = props;
-  const [keyword, setKeyword] = React.useState("");
+  const [keyword, setKeyword] = React.useState();
   const [list, setList] = React.useState<DouMiBlog.ArticleBrief[]>([]);
   const [showList, setShowList] = React.useState(false);
   const dispatch = useAppDispatch();
@@ -27,10 +27,13 @@ const BlogSearch = (props: { isLogin: boolean }) => {
   };
 
   React.useEffect(() => {
-    if (keyword) {
-      handleSearch();
-    } else {
-      setList([]);
+    if (keyword !== undefined) {
+      if (keyword) {
+        handleSearch();
+      } else {
+        dispatch(setSearchArticleName({ searchArticleName: "" }));
+        setList([]);
+      }
     }
   }, [keyword]);
 
@@ -62,7 +65,7 @@ const BlogSearch = (props: { isLogin: boolean }) => {
           inputProps={{ "aria-label": "search", type: "search" }}
           onInput={debounce((e) => {
             setKeyword((e.target as any).value);
-          }, 500)}
+          }, 1000)}
         />
         {keyword ? (
           <div
