@@ -1,9 +1,7 @@
 import BlogContainer from "@/features/BlogContainer";
 import styles from "./page.module.css";
-import InfiniteList from "@/features/InfiniteList";
 import { queryArticles } from "@/service/article";
 import { headers } from "next/headers";
-import { Pagination } from "@mui/material";
 import BlogPagination from "@/features/BlogPagination";
 
 const BlogList = async () => {

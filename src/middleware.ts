@@ -18,7 +18,7 @@ export default async function middleware(req: NextRequest) {
 
   const session = await getToken({
     req,
-    secret: "doumiblog", // process.env.NEXTAUTH_SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
   });
 
   if (!session && path.includes("/admin")) {
