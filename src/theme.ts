@@ -12,6 +12,12 @@ const theme = createTheme({
   typography: {
     fontFamily: roboto.style.fontFamily,
   },
+  // 定制图标的色调
+  palette: {
+    secondary: {
+      main: "#119d55",
+    },
+  },
 });
 
 export default theme;
