@@ -21,7 +21,7 @@
   width: 90px;
   height: 2px;
   content: "";
-  background: rgb(245, 0, 87);
+  background: rgba(62, 223, 140);
   left: 0;
   bottom: 0;
   transition: all 0.5s ease;

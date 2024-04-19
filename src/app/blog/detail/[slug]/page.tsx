@@ -31,7 +31,7 @@ const BlogDetail: React.FC<Prop> = async (props) => {
 
   return (
     <BlogContainer contentClass="blog-detail-wrapper">
-      <h1>{response.title}</h1>
+      <h1 className="detailTitle">{response.title}</h1>
       <section className="blog-info">
         <div className="info-item">
           <CalendarToday className="icon" />

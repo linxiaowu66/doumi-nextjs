@@ -77,3 +77,8 @@
   background: rgba(255, 79, 127, 0.6);
   margin-top: -8px;
 }
+@media screen and (max-width: 992px) {
+  .root {
+    margin-top: 0px;
+  }
+}

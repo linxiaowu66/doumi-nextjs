@@ -26,7 +26,7 @@ export default function BlogPagination({
     initialPosts.list
   );
   const [pageCount, setPageCount] = useState(initialPosts.pageCount);
-  const [currentPage, setCurrentPage] = useState(initialPosts.currentPage);
+  const [, setCurrentPage] = useState(initialPosts.currentPage);
 
   const handleChange = async (
     event: React.ChangeEvent<unknown>,

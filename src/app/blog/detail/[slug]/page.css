@@ -30,6 +30,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 10px;
     .info-item {
       display: flex;
       font-size: 12px;
@@ -80,6 +81,20 @@
     a {
       text-decoration: underline;
       color: #119d55;
+    }
+  }
+}
+@media screen and (max-width: 992px) {
+  .detailTitle {
+    margin-top: 0px;
+  }
+  .blog-info {
+    flex-wrap: wrap;
+  }
+  .micro-program {
+    img {
+      width: 100% !important;
+      height: unset !important;
     }
   }
 }

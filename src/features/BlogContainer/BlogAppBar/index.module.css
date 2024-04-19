@@ -6,11 +6,7 @@
   position: fixed;
   background: #fff;
 }
-@media screen and (max-width: 992px) {
-  .navHeader {
-    height: 100px;
-  }
-}
+
 .navHeader .container {
   width: 100%;
   margin: 0 auto;
@@ -99,7 +95,13 @@
 }
 @media screen and (max-width: 992px) {
   .navHeader .logo {
+    /* display: none; */
+  }
+  .tabs > a:nth-child(5) {
     display: none;
+  }
+  .navHeader .tabs a {
+    margin-right: 15px;
   }
 }
 

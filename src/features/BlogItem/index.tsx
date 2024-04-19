@@ -1,5 +1,5 @@
+"use client";
 import * as React from "react";
-
 import {
   CardActionArea,
   Card,
@@ -21,7 +21,10 @@ export default function BlogItem(props: DouMiBlog.ArticleBrief) {
   )}&title=${props.title}&pic=${encodeURIComponent(props.illustration)}`;
 
   return (
-    <Card className={styles.card}>
+    <Card
+      className={styles.card}
+      onClick={() => window.open(`/blog/detail/${props.slug}`, "_blank")}
+    >
       <CardActionArea className={styles.content}>
         <CardMedia
           className={styles.media}
@@ -29,17 +32,18 @@ export default function BlogItem(props: DouMiBlog.ArticleBrief) {
           title="blog illustration"
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {props.title}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {props.digest}
-          </Typography>
+          <h2 className={styles.title}>{props.title}</h2>
+          <p className={styles.digest}>{props.digest}</p>
         </CardContent>
       </CardActionArea>
       <CardActions className={styles.listAction}>
-        <div>
-          <Button size="small" color="primary" style={{ lineHeight: 1 }}>
+        <div className={styles.btnGroup}>
+          <Button
+            size="small"
+            color="primary"
+            style={{ lineHeight: 1 }}
+            className={styles.shareBtn}
+          >
             <Link href={sinaLink} target="__blank">
               {/* eslint-disable-next-line max-len */}
               <svg

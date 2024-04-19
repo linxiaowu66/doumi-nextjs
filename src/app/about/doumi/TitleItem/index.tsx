@@ -1,10 +1,7 @@
 import * as React from "react";
 import styles from "./index.module.css";
 
-function DouMiDetailItem(props: {
-  title: string;
-  children: React.ReactElement[];
-}) {
+function TitleItem(props: { title: string; children: React.ReactElement[] }) {
   return (
     <div className={styles.root}>
       <div className={styles.title}>{props.title}</div>
@@ -13,4 +10,4 @@ function DouMiDetailItem(props: {
   );
 }
 
-export default DouMiDetailItem;
+export default TitleItem;
