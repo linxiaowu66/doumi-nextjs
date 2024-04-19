@@ -89,6 +89,9 @@ const EditorHeader = (props: {
     } else {
       setMessage(`博文保存失败: ${result.data.message}`);
     }
+    setTimeout(() => {
+      setMessage("");
+    }, 3000);
     setLoading(false);
   };
   return (
