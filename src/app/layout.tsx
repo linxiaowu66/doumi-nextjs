@@ -22,8 +22,18 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const scriptContent = `
+    // 禁用右键菜单，增加盗用博客图片的成本
+    document.oncontextmenu = () => false;
+    document.onkeydown = (event) => {
+      if (event.key === "F12") {
+        event.preventDefault();
+      }
+    };
+  `;
   return (
     <html lang="en">
+      <script dangerouslySetInnerHTML={{ __html: scriptContent }} />
       <body className={inter.className}>
         <StoreProvider>
           <NextAuthProvider>
