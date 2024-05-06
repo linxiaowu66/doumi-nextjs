@@ -91,25 +91,6 @@ const AboutDouMi = () => {
           </ClickTooltip>
         </div>
       </TitleItem>
-      <TitleItem title="赞赏豆米">
-        <p className="doumi-reward-tip">
-          如果觉得博客还不错，欢迎Fork，顺便请作者喝杯咖啡哦~
-        </p>
-        <div className="doumi-reward">
-          <Image
-            width={160}
-            height={160}
-            src="https://blogimage.5udou.cn/homePage/WechatIMG2.jpeg?x-oss-process=image/resize,l_600/crop,x_40,y_190,w_320,h_320/resize,l_160"
-            alt="微信收款"
-          />
-          <Image
-            width={160}
-            height={160}
-            src="https://blogimage.5udou.cn/homePage/WechatIMG3.jpeg?x-oss-process=image/resize,l_600/crop,x_60,y_120,w_320,h_320/resize,l_160"
-            alt="支付宝收款"
-          />
-        </div>
-      </TitleItem>
     </BlogContainer>
   );
 };
