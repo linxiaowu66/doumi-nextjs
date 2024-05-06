@@ -7,7 +7,6 @@ import {
   CardContent,
   CardMedia,
   Button,
-  Typography,
 } from "@mui/material";
 import styles from "./index.module.css";
 import Link from "next/link";
@@ -21,11 +20,11 @@ export default function BlogItem(props: DouMiBlog.ArticleBrief) {
   )}&title=${props.title}&pic=${encodeURIComponent(props.illustration)}`;
 
   return (
-    <Card
-      className={styles.card}
-      onClick={() => window.open(`/blog/detail/${props.slug}`, "_blank")}
-    >
-      <CardActionArea className={styles.content}>
+    <Card className={styles.card}>
+      <CardActionArea
+        className={styles.content}
+        onClick={() => window.open(`/blog/detail/${props.slug}`, "_blank")}
+      >
         <CardMedia
           className={styles.media}
           image={props.illustration}
@@ -62,7 +61,11 @@ export default function BlogItem(props: DouMiBlog.ArticleBrief) {
           </Button>
           <WxShare slug={props.slug} />
         </div>
-        <Link href={`/blog/detail/${props.slug}`} target="__blank">
+        <Link
+          href={`/blog/detail/${props.slug}`}
+          target="__blank"
+          onClick={(e) => e.stopPropagation()}
+        >
           阅读全文
         </Link>
       </CardActions>
