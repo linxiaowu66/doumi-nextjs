@@ -6,7 +6,6 @@ import TitleItem from "./TitleItem";
 
 import "./page.css";
 import ClickTooltip from "./ClickTooltip";
-import Image from "next/image";
 
 const AboutDouMi = () => {
   return (

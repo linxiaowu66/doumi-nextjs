@@ -206,9 +206,10 @@ export const createOrUpdateArticle = async (
   articleIns.tags = loadTags;
   articleIns.category = loadCat[0];
   articleIns.articleStatus = article.articleStatus as ArticleStatus;
+  // 统一的图片上传链接，全部替换成带有水印的目录
   articleIns.content = article.content.replace(
-    /http:\/\/blogimages2016/g,
-    "https://blogimages2016"
+    /https:\/\/blogimage.5udou.cn\/obsidian/g,
+    "https://blogimage.5udou.cn/watermarked"
   );
   articleIns.digest = article.digest;
   articleIns.illustration = article.illustration.replace(
