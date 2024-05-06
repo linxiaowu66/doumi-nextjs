@@ -6,32 +6,32 @@ import styles from "./index.module.css";
 function DouMiLinks() {
   const images = [
     {
-      url: "https://blogimages2016.oss-cn-hangzhou.aliyuncs.com/homePage/%E6%96%AD%E6%A1%A5%E6%AE%8B%E9%9B%AA.jpeg?x-oss-process=image/resize,h_300",
+      url: "https://blogimage.5udou.cn/homePage/%E6%96%AD%E6%A1%A5%E6%AE%8B%E9%9B%AA.jpeg?x-oss-process=image/resize,h_300",
       title: "断桥残雪",
       link: "/blog/list",
     },
     {
-      url: "https://blogimages2016.oss-cn-hangzhou.aliyuncs.com/homePage/%E8%A5%BF%E6%BA%AA%E6%B9%BF%E5%9C%B0.jpg?x-oss-process=image/resize,h_300",
+      url: "https://blogimage.5udou.cn/homePage/%E8%A5%BF%E6%BA%AA%E6%B9%BF%E5%9C%B0.jpg?x-oss-process=image/resize,h_300",
       title: "西溪湿地",
       link: "/website/stats",
     },
     {
-      url: "https://blogimages2016.oss-cn-hangzhou.aliyuncs.com/homePage/%E4%B9%9D%E6%BA%AA%E7%83%9F%E6%A0%91.jpg?x-oss-process=image/resize,h_300",
+      url: "https://blogimage.5udou.cn/homePage/%E4%B9%9D%E6%BA%AA%E7%83%9F%E6%A0%91.jpg?x-oss-process=image/resize,h_300",
       title: "九溪烟树",
       link: "/about/blog",
     },
     {
-      url: "https://blogimages2016.oss-cn-hangzhou.aliyuncs.com/homePage/%E8%8B%8F%E5%A0%A4.jpeg?x-oss-process=image/resize,h_300",
+      url: "https://blogimage.5udou.cn/homePage/%E8%8B%8F%E5%A0%A4.jpeg?x-oss-process=image/resize,h_300",
       title: "苏堤春晓",
       link: "/website/stats",
     },
     {
-      url: "https://blogimages2016.oss-cn-hangzhou.aliyuncs.com/homePage/%E6%B9%98%E6%B9%96.jpg?x-oss-process=image/resize,h_300",
+      url: "https://blogimage.5udou.cn/homePage/%E6%B9%98%E6%B9%96.jpg?x-oss-process=image/resize,h_300",
       title: "湘湖",
       link: "/about/blog",
     },
     {
-      url: "https://blogimages2016.oss-cn-hangzhou.aliyuncs.com/homePage/douMi.jpg?x-oss-process=image/resize,h_300",
+      url: "https://blogimage.5udou.cn/homePage/douMi.jpg?x-oss-process=image/resize,h_300",
       title: "豆米",
       link: "/about/doumi",
     },

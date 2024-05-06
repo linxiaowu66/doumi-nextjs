@@ -18,7 +18,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "blogimages2016.oss-cn-hangzhou.aliyuncs.com",
+        hostname: "blogimage.5udou.cn",
         port: "",
       },
     ],

@@ -72,7 +72,7 @@ const BlogDetail: React.FC<Prop> = async (props) => {
       <section className="micro-program">
         <h4>公众号关注一波~</h4>
         <Image
-          src="https://blogimages2016.oss-cn-hangzhou.aliyuncs.com/homePage/%E5%85%AC%E4%BC%97%E5%8F%B7-%E7%99%BD%E8%89%B2%E7%89%88.png"
+          src="https://blogimage.5udou.cn/homePage/%E5%85%AC%E4%BC%97%E5%8F%B7-%E7%99%BD%E8%89%B2%E7%89%88.png"
           alt="微信公众号"
           width={570}
           height={208}
