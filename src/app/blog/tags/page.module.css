@@ -7,11 +7,11 @@
   flex-wrap: wrap;
 }
 .tagListWrapper header {
-  font-size: 1.25rem;
+  font-size: 22px;
   margin-bottom: 15px;
 }
 .tagItem {
-  color: #8f1eff;
+  color: #119d55;
   font-weight: bold;
   text-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
   margin: 10px 20px 10px 0px;

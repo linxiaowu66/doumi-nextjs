@@ -1,0 +1,51 @@
+.articleName {
+  color: #119d55;
+  font-weight: bold;
+  font-size: 18px;
+  text-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
+  margin: 10px 20px 10px 0px;
+}
+.count {
+  font-size: 14px;
+  margin-left: 10px;
+  color: rgb(156, 163, 175);
+}
+
+.articleName svg {
+  margin-right: 5px;
+}
+.articleList {
+  overflow: hidden;
+  transition: height 0.5s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.articleList::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  -webkit-appearance: none;
+  opacity: 0 !important;
+}
+
+.open {
+  overflow: scroll;
+}
+
+.articleItem {
+  border-bottom: 1px dashed rgb(229, 231, 235);
+  padding-bottom: 5px;
+  color: rgb(55, 65, 81);
+  font-size: 16px;
+}
+
+.articleItem:hover {
+  border-bottom-color: rgb(55, 65, 81);
+}
+
+.articleTime {
+  color: rgb(156, 163, 175);
+  font-size: 14px;
+  margin-right: 10px;
+}

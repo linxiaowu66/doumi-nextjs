@@ -11,11 +11,21 @@ export const navigatorListWithNotLogin = [
     subName: "Blogs",
     link: "/blog/list",
   },
-  // {
-  //   name: "数据",
-  //   subName: "Statistics",
-  //   link: "/website/stats",
-  // },
+  {
+    name: "标签",
+    subName: "Tags",
+    link: "/blog/tags",
+  },
+  {
+    name: "分类",
+    subName: "Tags",
+    link: "/blog/cats",
+  },
+  {
+    name: "时间线",
+    subName: "Tags",
+    link: "/blog/timeline",
+  },
   {
     name: "豆米",
     subName: "DouMi",
@@ -30,12 +40,6 @@ export const navigatorListWithNotLogin = [
     name: "登录",
     subName: "Login",
     link: "/auth/login",
-  },
-  {
-    name: "Github",
-    subName: "Github",
-    icon: <GitHub />,
-    link: "https://github.com/linxiaowu66/doumi-nextjs",
   },
 ];
 

@@ -7,7 +7,7 @@
   flex-direction: column;
 }
 .catListWrapper header {
-  font-size: 22px;
+  font-size: 1.25rem;
   margin-bottom: 15px;
   cursor: pointer;
 }
