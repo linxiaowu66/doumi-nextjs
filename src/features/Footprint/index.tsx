@@ -6,6 +6,15 @@ import { getWebsiteSummaryData } from "@/service/statistics";
 
 async function FootPrint() {
   const res = await getWebsiteSummaryData();
+  const formatNumber = (num: number) => {
+    if (num >= 10000) {
+      return (num / 10000).toFixed(1) + "w";
+    } else if (num >= 1000) {
+      return (num / 1000).toFixed(1) + "k";
+    } else {
+      return num.toString();
+    }
+  };
   return (
     <footer className={styles.footer}>
       <div>
@@ -16,11 +25,11 @@ async function FootPrint() {
       <div className={styles.data}>
         <div style={{ marginRight: "20px" }}>
           <GroupOutlinedIcon style={{ marginRight: "5px" }} />
-          {res.totalUv}
+          {formatNumber(res.totalUv)}
         </div>
         <div>
           <RemoveRedEyeOutlinedIcon style={{ marginRight: "5px" }} />
-          {res.totalPv}
+          {formatNumber(res.totalPv)}
         </div>
       </div>
     </footer>

@@ -18,7 +18,7 @@ const TagList = async () => {
   return (
     <BlogContainer>
       <div className={styles.tagListWrapper}>
-        <header>标签</header>
+        <header className={styles.title}>标签</header>
         <main className={styles.mainContainer}>
           {result.map((item) => (
             <div key={item.id} className={styles.tagItem}>

@@ -44,7 +44,7 @@ const SpecificTag: React.FC<Prop> = async (props) => {
   return (
     <BlogContainer>
       <div className={styles.catListWrapper}>
-        <header>{decodeURIComponent(tagName)}</header>
+        <header className={styles.title}>{decodeURIComponent(tagName)}</header>
         <main className={styles.mainContainer}>
           {formatResult.map((item) => (
             // 解决：Only plain objects, and a few built-ins, can be passed to Client Components from Server Components. Classes or null prototypes are not supported.
