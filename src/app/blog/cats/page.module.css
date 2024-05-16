@@ -1,0 +1,65 @@
+.catListWrapper {
+  padding: 1.5rem;
+  min-height: calc(100vh - 82px - 199px);
+}
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+}
+.catListWrapper header {
+  font-size: 1.25rem;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+.catName {
+  color: #1f8dff;
+  font-weight: bold;
+  font-size: 18px;
+  text-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
+  margin: 10px 20px 10px 0px;
+}
+.count {
+  font-size: 14px;
+  margin-left: 10px;
+  color: rgb(156, 163, 175);
+}
+
+.catName svg {
+  margin-right: 5px;
+}
+
+.articleList {
+  height: 0px;
+  overflow: hidden;
+  transition: height 0.5s ease-in-out;
+}
+
+.articleList::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  -webkit-appearance: none;
+  opacity: 0 !important;
+}
+
+.open {
+  height: 300px;
+  overflow: scroll;
+}
+
+.articleItem {
+  border-bottom: 1px dashed rgb(229, 231, 235);
+  padding-bottom: 5px;
+  color: rgb(55, 65, 81);
+  font-size: 16px;
+}
+
+.articleItem:hover {
+  border-bottom-color: rgb(55, 65, 81);
+}
+
+.articleTime {
+  color: rgb(156, 163, 175);
+  font-size: 14px;
+  margin-right: 10px;
+}
