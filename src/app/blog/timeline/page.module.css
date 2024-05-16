@@ -1,13 +1,14 @@
 .catListWrapper {
-  padding: 1.5rem;
+  padding: 5px 1.5rem;
   min-height: calc(100vh - 82px - 199px);
 }
 .mainContainer {
   display: flex;
   flex-direction: column;
 }
-.catListWrapper header {
-  font-size: 22px;
+.catListWrapper .title {
+  font-size: 24px;
   margin-bottom: 15px;
   cursor: pointer;
+  font-weight: bold;
 }

@@ -50,7 +50,7 @@ const BlogDetail: React.FC<Prop> = async (props) => {
           <span>
             分类于{" "}
             <Link
-              href={`/blog/list?queryCat=${response.catId}`}
+              href={`/blog/cat/${encodeURIComponent(response.category)}`}
               style={{ textDecoration: "underline", cursor: "pointer" }}
             >
               {response.category}

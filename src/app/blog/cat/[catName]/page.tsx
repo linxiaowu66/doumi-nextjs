@@ -1,5 +1,5 @@
 import { getDataSource } from "@/database";
-import { Archive, Tag } from "@/database/entities";
+import { Archive, Category, Tag } from "@/database/entities";
 import BlogContainer from "@/features/BlogContainer";
 import styles from "./page.module.css";
 import React from "react";
@@ -7,17 +7,17 @@ import ArticleGroup from "@/features/ArticleGroup";
 
 interface Prop {
   params: {
-    tagName: string;
+    catName: string;
   };
 }
 
-const SpecificTag: React.FC<Prop> = async (props) => {
-  const { tagName } = props.params;
+const SpecificCat: React.FC<Prop> = async (props) => {
+  const { catName } = props.params;
   const AppDataSource = await getDataSource();
-  const repo = AppDataSource.getRepository(Tag);
+  const repo = AppDataSource.getRepository(Category);
 
   const result = await repo.find({
-    where: { name: decodeURIComponent(tagName) },
+    where: { name: decodeURIComponent(catName) },
     relations: ["articles"],
     order: { articles: { createdAt: "DESC" } },
   });
@@ -44,7 +44,7 @@ const SpecificTag: React.FC<Prop> = async (props) => {
   return (
     <BlogContainer>
       <div className={styles.catListWrapper}>
-        <header>{decodeURIComponent(tagName)}</header>
+        <header className={styles.title}>{decodeURIComponent(catName)}</header>
         <main className={styles.mainContainer}>
           {formatResult.map((item) => (
             // 解决：Only plain objects, and a few built-ins, can be passed to Client Components from Server Components. Classes or null prototypes are not supported.
@@ -60,4 +60,4 @@ const SpecificTag: React.FC<Prop> = async (props) => {
   );
 };
 
-export default SpecificTag;
+export default SpecificCat;

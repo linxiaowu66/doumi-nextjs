@@ -1,20 +1,22 @@
 .tagListWrapper {
-  padding: 1.5rem;
+  padding: 5px 1.5rem;
   min-height: calc(100vh - 82px - 199px);
 }
 .mainContainer {
   display: flex;
   flex-wrap: wrap;
 }
-.tagListWrapper header {
-  font-size: 22px;
+.tagListWrapper .title {
+  font-size: 24px;
   margin-bottom: 15px;
+  font-weight: bold;
 }
 .tagItem {
   color: #119d55;
   font-weight: bold;
   text-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
   margin: 10px 20px 10px 0px;
+  font-size: 20px;
 }
 
 .tagItem svg {
