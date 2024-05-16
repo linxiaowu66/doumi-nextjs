@@ -34,6 +34,8 @@ const TagList = async () => {
                   <path d={svgPath} />
                 </g>
               </svg>
+              {/* 如果我的name包含了/，那么在开发环境下encode一次就够了，但是线上环境还是会被认为多了一层路径导致404，所以 */}
+              {/* 只能encode两次：https://stackoverflow.com/questions/65958708/nextjs-routing-considers-and-2f-in-determining-the-route */}
               <Link
                 href={`/blog/tag/${encodeURIComponent(
                   encodeURIComponent(item.name)
