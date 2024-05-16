@@ -1,5 +1,5 @@
 import { getDataSource } from "@/database";
-import { Category } from "@/database/entities";
+import { ArticleStatus, Category } from "@/database/entities";
 import BlogContainer from "@/features/BlogContainer";
 import styles from "./page.module.css";
 import React from "react";
@@ -10,6 +10,9 @@ const CatList = async () => {
   const repo = AppDataSource.getRepository(Category);
 
   const result = await repo.find({
+    where: {
+      articles: { articleStatus: ArticleStatus.PUBLISHED },
+    },
     relations: ["articles"],
     order: { articles: { createdAt: "DESC" } },
   });

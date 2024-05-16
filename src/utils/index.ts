@@ -1,3 +1,5 @@
+import { Article } from "@/database/entities";
+
 export const yAxisLabelFormatter = (isScale100: boolean) => (value: number) => {
   if (isScale100) {
     return value * 100;
@@ -10,4 +12,26 @@ export const tooltipPercent = (params: any) => {
     relVal += `<br/>${marker}${seriesName} : ${(value * 100).toFixed(2)}%`;
   });
   return relVal;
+};
+
+export const groupByYearsForArticle = (result: any) => {
+  const formatResult: Record<
+    string,
+    { id: string; archiveTime: string; articles: Article[] }
+  > = {};
+  result.forEach((item: any) => {
+    item.articles.forEach((article: Article) => {
+      const year = article.createdAt.getFullYear().toString();
+      if (!formatResult[year]) {
+        formatResult[year] = { archiveTime: year, articles: [], id: year };
+      }
+      formatResult[year].articles.push(article);
+    });
+  });
+  return Object.values(formatResult).sort(
+    (
+      a: { id: string; archiveTime: string; articles: Article[] },
+      b: { id: string; archiveTime: string; articles: Article[] }
+    ) => b.archiveTime.localeCompare(a.archiveTime)
+  );
 };

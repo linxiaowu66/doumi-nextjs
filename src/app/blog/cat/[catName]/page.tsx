@@ -1,9 +1,10 @@
 import { getDataSource } from "@/database";
-import { Archive, Category, Tag } from "@/database/entities";
+import { Archive, ArticleStatus, Category, Tag } from "@/database/entities";
 import BlogContainer from "@/features/BlogContainer";
 import styles from "./page.module.css";
 import React from "react";
 import ArticleGroup from "@/features/ArticleGroup";
+import { groupByYearsForArticle } from "@/utils";
 
 interface Prop {
   params: {
@@ -17,29 +18,15 @@ const SpecificCat: React.FC<Prop> = async (props) => {
   const repo = AppDataSource.getRepository(Category);
 
   const result = await repo.find({
-    where: { name: decodeURIComponent(catName) },
+    where: {
+      name: decodeURIComponent(catName),
+      articles: { articleStatus: ArticleStatus.PUBLISHED },
+    },
     relations: ["articles"],
     order: { articles: { createdAt: "DESC" } },
   });
 
-  const formatResult = Object.values(
-    result.reduce((acc: Record<string, Archive>, obj) => {
-      const year = obj.createdAt.getFullYear();
-      if (!acc[year]) {
-        acc[year] = {
-          archiveTime: year.toString(),
-          articles: [],
-          id: +year,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        };
-      }
-      acc[year].articles.push(...obj.articles);
-      return acc;
-    }, {})
-  ).sort((a: Archive, b: Archive) =>
-    b.archiveTime.localeCompare(a.archiveTime)
-  );
+  const formatResult = groupByYearsForArticle(result);
 
   return (
     <BlogContainer>

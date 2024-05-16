@@ -1,5 +1,5 @@
 import { getDataSource } from "@/database";
-import { Archive } from "@/database/entities";
+import { Archive, ArticleStatus } from "@/database/entities";
 import BlogContainer from "@/features/BlogContainer";
 import styles from "./page.module.css";
 import React from "react";
@@ -10,6 +10,9 @@ const ArchiveList = async () => {
   const repo = AppDataSource.getRepository(Archive);
 
   const result = await repo.find({
+    where: {
+      articles: { articleStatus: ArticleStatus.PUBLISHED },
+    },
     relations: ["articles"],
     order: { createdAt: "DESC", articles: { createdAt: "DESC" } },
   });
