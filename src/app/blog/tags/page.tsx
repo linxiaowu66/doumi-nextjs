@@ -34,7 +34,11 @@ const TagList = async () => {
                   <path d={svgPath} />
                 </g>
               </svg>
-              <Link href={`/blog/tag/${encodeURIComponent(item.name)}`}>
+              <Link
+                href={`/blog/tag/${encodeURIComponent(
+                  encodeURIComponent(item.name)
+                )}`}
+              >
                 {item.name}
               </Link>
             </div>

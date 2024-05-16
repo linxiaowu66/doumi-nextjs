@@ -17,9 +17,11 @@ const SpecificTag: React.FC<Prop> = async (props) => {
   const AppDataSource = await getDataSource();
   const repo = AppDataSource.getRepository(Tag);
 
+  const decodeName = decodeURIComponent(decodeURIComponent(tagName));
+
   const result = await repo.find({
     where: {
-      name: decodeURIComponent(tagName),
+      name: decodeName,
       articles: { articleStatus: ArticleStatus.PUBLISHED },
     },
     relations: ["articles"],
@@ -31,7 +33,7 @@ const SpecificTag: React.FC<Prop> = async (props) => {
   return (
     <BlogContainer>
       <div className={styles.catListWrapper}>
-        <header className={styles.title}>{decodeURIComponent(tagName)}</header>
+        <header className={styles.title}>{decodeName}</header>
         <main className={styles.mainContainer}>
           {formatResult.map((item) => (
             // 解决：Only plain objects, and a few built-ins, can be passed to Client Components from Server Components. Classes or null prototypes are not supported.
