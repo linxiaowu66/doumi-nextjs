@@ -97,7 +97,13 @@
   .navHeader .logo {
     /* display: none; */
   }
-  .tabs > a:nth-child(5) {
+  .tabs > a:nth-child(6) {
+    display: none;
+  }
+  .tabs > a:nth-child(7) {
+    display: none;
+  }
+  .tabs > a:nth-child(8) {
     display: none;
   }
   .navHeader .tabs a {

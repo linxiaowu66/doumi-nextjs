@@ -18,12 +18,12 @@ export const navigatorListWithNotLogin = [
   },
   {
     name: "分类",
-    subName: "Tags",
+    subName: "Categories",
     link: "/blog/cats",
   },
   {
     name: "时间线",
-    subName: "Tags",
+    subName: "Timeline",
     link: "/blog/timeline",
   },
   {

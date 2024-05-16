@@ -13,17 +13,17 @@ function DouMiLinks() {
     {
       url: "https://blogimage.5udou.cn/homePage/%E8%A5%BF%E6%BA%AA%E6%B9%BF%E5%9C%B0.jpg?x-oss-process=style/addWaterMarkBottom",
       title: "西溪湿地",
-      link: "/website/stats",
+      link: "/blog/tags",
     },
     {
       url: "https://blogimage.5udou.cn/homePage/%E4%B9%9D%E6%BA%AA%E7%83%9F%E6%A0%91.jpg?x-oss-process=style/addWaterMarkBottom",
       title: "九溪烟树",
-      link: "/about/blog",
+      link: "/about/timeline",
     },
     {
       url: "https://blogimage.5udou.cn/homePage/%E8%8B%8F%E5%A0%A4.jpeg?x-oss-process=style/addWaterMarkBottom",
       title: "苏堤春晓",
-      link: "/website/stats",
+      link: "/about/cats",
     },
     {
       url: "https://blogimage.5udou.cn/homePage/%E6%B9%98%E6%B9%96.jpg?x-oss-process=style/addWaterMarkBottom",

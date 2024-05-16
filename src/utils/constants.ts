@@ -1,5 +1,12 @@
 export const WebsiteChangelog = [
   {
+    title: "博客分类",
+    desc1: "增加标签、分类、时间线页面，方便查询",
+    desc2: "修复首页调整的链接错误",
+    date: "2024/05",
+    time: "15 周四",
+  },
+  {
     title: "博客数据",
     desc1: "博客数据统计迁移至后台，改用echarts实现",
     desc2: "优化一些功能bug",
