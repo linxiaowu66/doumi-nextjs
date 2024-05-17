@@ -172,7 +172,7 @@ export async function fetchWebsiteStatistics() {
 
   return {
     visitCities: visitCities.map((item) => ({
-      name: item.cityName.replace("市", ""),
+      name: item.cityName,
       value: item.count,
     })),
     visitData: results,

@@ -16,7 +16,7 @@ import { install as AMapComponent } from "echarts-extension-amap/export";
 
 // import the official type definition for AMap 2.0
 import "@amap/amap-jsapi-types";
-import { geoCoordMap } from "@/utils/constants";
+import { geoCoordMap } from "@/utils/allCity";
 
 const convertData = function (data: { name: string; value: number }[]) {
   var res = [];
@@ -90,6 +90,9 @@ const CustomMapChart = ({
     };
   }, []);
 
+  const max = Math.max(...data.map((item: { value: number }) => item.value));
+  const min = Math.min(...data.map((item: { value: number }) => item.value));
+
   return (
     <ReactEChartsCore
       ref={chartRef}
@@ -147,7 +150,7 @@ const CustomMapChart = ({
             // data items [[lng, lat, value], [lng, lat, value], ...]
             data: convertData(data),
             symbolSize: function (val: number[]) {
-              return val[2] / 10;
+              return ((val[2] - min) / (max - min)) * 10 + 5;
             },
             encode: {
               value: 2,
@@ -158,7 +161,7 @@ const CustomMapChart = ({
               show: false,
             },
             itemStyle: {
-              color: "#00c1de",
+              color: "#119d55",
             },
             emphasis: {
               label: {
@@ -178,7 +181,7 @@ const CustomMapChart = ({
                 .slice(0, 6)
             ),
             symbolSize: function (val: number[]) {
-              return val[2] / 10;
+              return ((val[2] - min) / (max - min)) * 10 + 5;
             },
             encode: {
               value: 2,
