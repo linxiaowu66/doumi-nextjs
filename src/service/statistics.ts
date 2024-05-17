@@ -62,8 +62,6 @@ export const updateWebsiteStatistics = async () => {
   const AppDataSource = await getDataSource();
   const now = AwesomeHelp.convertDate(new Date(), "YYYY-MM-DD");
 
-  await syncWithVisitCitiesData(reqIp);
-
   // create a new query runner
   const queryRunner = AppDataSource.createQueryRunner();
 
@@ -83,12 +81,15 @@ export const updateWebsiteStatistics = async () => {
     `${reqIp} visit and the record of website is exist? ${website?.id}`
   );
 
+  let isFirstVisitToday = false;
+
   try {
     if (website) {
       if (!website.todayIps.includes(reqIp)) {
         website.todayIps.push(reqIp);
         website.todayPv = +website.todayPv + 1;
         website.todayUv = +website.todayUv + 1;
+        isFirstVisitToday = true;
       } else {
         website.todayPv = +website.todayPv + 1;
       }
@@ -115,6 +116,12 @@ export const updateWebsiteStatistics = async () => {
   } finally {
     // you need to release query runner which is manually created:
     await queryRunner.release();
+  }
+
+  if (isFirstVisitToday) {
+    // 当天多次访问的同一个IP不会算进访问的区域数据里面，这样数据就不会重复出现
+    // 访问城市本质是根据访问的IP来获取的
+    await syncWithVisitCitiesData(reqIp);
   }
 };
 
