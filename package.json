@@ -23,6 +23,7 @@
     "clsx": "^2.1.0",
     "dayjs": "^1.11.10",
     "echarts": "^5.5.0",
+    "echarts-extension-amap": "^1.12.0",
     "echarts-for-react": "^3.0.2",
     "github-markdown-css": "^5.5.1",
     "lodash-es": "^4.17.21",
@@ -47,9 +48,11 @@
     "sharp": "^0.33.3",
     "typeorm": "^0.3.20",
     "winston": "^3.11.0",
-    "winston-daily-rotate-file": "^5.0.0"
+    "winston-daily-rotate-file": "^5.0.0",
+    "xml2js": "^0.6.2"
   },
   "devDependencies": {
+    "@amap/amap-jsapi-types": "^0.0.15",
     "@types/bcrypt": "^5.0.2",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^20",
@@ -58,6 +61,7 @@
     "@types/react-dom": "^18",
     "@types/react-infinite-scroller": "^1.2.5",
     "@types/react-syntax-highlighter": "^15.5.11",
+    "@types/xml2js": "^0.4.14",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
     "typescript": "^5"

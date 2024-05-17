@@ -47,6 +47,9 @@ dependencies:
   echarts:
     specifier: ^5.5.0
     version: 5.5.0
+  echarts-extension-amap:
+    specifier: ^1.12.0
+    version: 1.12.0
   echarts-for-react:
     specifier: ^3.0.2
     version: 3.0.2(echarts@5.5.0)(react@18.2.0)
@@ -122,8 +125,14 @@ dependencies:
   winston-daily-rotate-file:
     specifier: ^5.0.0
     version: 5.0.0(winston@3.11.0)
+  xml2js:
+    specifier: ^0.6.2
+    version: 0.6.2
 
 devDependencies:
+  '@amap/amap-jsapi-types':
+    specifier: ^0.0.15
+    version: 0.0.15
   '@types/bcrypt':
     specifier: ^5.0.2
     version: 5.0.2
@@ -148,6 +157,9 @@ devDependencies:
   '@types/react-syntax-highlighter':
     specifier: ^15.5.11
     version: 15.5.11
+  '@types/xml2js':
+    specifier: ^0.4.14
+    version: 0.4.14
   eslint:
     specifier: ^8
     version: 8.56.0
@@ -163,6 +175,10 @@ packages:
   /@aashutoshrathi/word-wrap@1.2.6:
     resolution: {integrity: sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==}
     engines: {node: '>=0.10.0'}
+    dev: true
+
+  /@amap/amap-jsapi-types@0.0.15:
+    resolution: {integrity: sha512-oqyRqHpVDZh5bUe2mAJh41ZsziSj0eUzwcfIbiaBNB0eiTJnZNhKsTdk77VOklOjwuwNfsblpKW9LjmWNpeQ7A==}
     dev: true
 
   /@babel/code-frame@7.23.5:
@@ -1242,6 +1258,12 @@ packages:
     resolution: {integrity: sha512-EwmlvuaxPNej9+T4v5AuBPJa2x2UOJVdjCtDHgcDqitUeOtjnJKJ+apYjVcAoBEMjKW1VVFGZLUb5+qqa09XFA==}
     dev: false
 
+  /@types/xml2js@0.4.14:
+    resolution: {integrity: sha512-4YnrRemBShWRO2QjvUin8ESA41rH+9nQGLUGZV/1IDhi3SL9OhdpNC/MrulTWuptXKwhx/aDxE7toV0f/ypIXQ==}
+    dependencies:
+      '@types/node': 20.11.19
+    dev: true
+
   /@typescript-eslint/parser@6.21.0(eslint@8.56.0)(typescript@5.3.3):
     resolution: {integrity: sha512-tbsV1jPne5CkFQCgPBcDOt30ItF7aJoZL997JSF7MhGQqOeT3svWRYxiqlfA5RUdlHN6Fi+EI9bxqbdyAUZjYQ==}
     engines: {node: ^16.0.0 || >=18.0.0}
@@ -1962,6 +1984,10 @@ packages:
 
   /eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
+
+  /echarts-extension-amap@1.12.0:
+    resolution: {integrity: sha512-JpCCLhafpUGSfMcAB44lTnjnNuYWQ1jPuyvOF3t/zziQ1jbDjGLTkhIFenpKMuZOz9GzS4tREXL/zGeNrZpxDw==}
+    dev: false
 
   /echarts-for-react@3.0.2(echarts@5.5.0)(react@18.2.0):
     resolution: {integrity: sha512-DRwIiTzx8JfwPOVgGttDytBqdp5VzCSyMRIxubgU/g2n9y3VLUmF2FK7Icmg/sNVkv4+rktmrLN9w22U2yy3fA==}
@@ -4744,6 +4770,10 @@ packages:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
     dev: false
 
+  /sax@1.3.0:
+    resolution: {integrity: sha512-0s+oAmw9zLl1V1cS9BtZN7JAd0cW5e0QH4W3LWEK6a4LaLEA2OTpGYWDY+6XasBLtz6wkm3u1xRw95mRuJ59WA==}
+    dev: false
+
   /scheduler@0.23.0:
     resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
     dependencies:
@@ -5523,6 +5553,19 @@ packages:
 
   /wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
+
+  /xml2js@0.6.2:
+    resolution: {integrity: sha512-T4rieHaC1EXcES0Kxxj4JWgaUQHDk+qwHcYOCFHfiwKz7tOVPLq7Hjq9dM1WCMhylqMEfP7hMcOIChvotiZegA==}
+    engines: {node: '>=4.0.0'}
+    dependencies:
+      sax: 1.3.0
+      xmlbuilder: 11.0.1
+    dev: false
+
+  /xmlbuilder@11.0.1:
+    resolution: {integrity: sha512-fDlsI/kFEx7gLvbecc0/ohLG50fugQp8ryHzMTuW9vSa1GJ0XYWKnhsUx7oie3G98+r56aTQIUB4kht42R3JvA==}
+    engines: {node: '>=4.0'}
+    dev: false
 
   /xtend@4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}

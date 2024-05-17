@@ -1,4 +1,5 @@
 import { AwesomeHelp } from "awesome-js";
+import parser from "xml2js";
 import { headers } from "next/headers";
 import { getDataSource } from "@/database";
 import { Archive, Reader, Tag, Website } from "@/database/entities";
@@ -6,6 +7,7 @@ import { logger } from "@/logger";
 import dayjs from "dayjs";
 import { MoreThanOrEqual } from "typeorm";
 import { Category } from "@/database/entities";
+import { VisitCity } from "@/database/entities/visitcity";
 
 export const updateArticleStatictics = async (slug: string) => {
   const header = headers();
@@ -59,6 +61,8 @@ export const updateWebsiteStatistics = async () => {
   }
   const AppDataSource = await getDataSource();
   const now = AwesomeHelp.convertDate(new Date(), "YYYY-MM-DD");
+
+  await syncWithVisitCitiesData(reqIp);
 
   // create a new query runner
   const queryRunner = AppDataSource.createQueryRunner();
@@ -143,27 +147,34 @@ export async function fetchWebsiteStatistics() {
   const archiveRepo = AppDataSource.getRepository(Archive);
   const catRepo = AppDataSource.getRepository(Category);
   const tagRepo = AppDataSource.getRepository(Tag);
+  const visitCityRepo = AppDataSource.getRepository(VisitCity);
 
-  const [results, archiveResult, catRes, tagRes] = await Promise.all([
-    repo.find({
-      where: {
-        // 查询最近7天的数据
-        createdAt: MoreThanOrEqual(dayjs().subtract(15, "day").toDate()),
-      },
-    }),
-    archiveRepo.find({
-      where: {
-        // 查询最近一年的数据
-        createdAt: MoreThanOrEqual(dayjs().subtract(365, "day").toDate()),
-      },
-      relations: ["articles"],
-    }),
-    catRepo.find({ relations: ["articles"] }),
-    // 查询tag最多的前十个
-    tagRepo.find({ relations: ["articles"] }),
-  ]);
+  const [results, archiveResult, catRes, tagRes, visitCities] =
+    await Promise.all([
+      repo.find({
+        where: {
+          // 查询最近7天的数据
+          createdAt: MoreThanOrEqual(dayjs().subtract(15, "day").toDate()),
+        },
+      }),
+      archiveRepo.find({
+        where: {
+          // 查询最近一年的数据
+          createdAt: MoreThanOrEqual(dayjs().subtract(365, "day").toDate()),
+        },
+        relations: ["articles"],
+      }),
+      catRepo.find({ relations: ["articles"] }),
+      // 查询tag最多的前十个
+      tagRepo.find({ relations: ["articles"] }),
+      visitCityRepo.find(),
+    ]);
 
   return {
+    visitCities: visitCities.map((item) => ({
+      name: item.cityName.replace("市", ""),
+      value: item.count,
+    })),
     visitData: results,
     catData: catRes.map((item) => ({
       id: item.id,
@@ -190,4 +201,48 @@ export async function fetchWebsiteStatistics() {
       .sort((a, b) => b.value - a.value)
       .slice(0, 6),
   };
+}
+
+export async function syncWithVisitCitiesData(ip: string) {
+  if (ip.includes("::1") || ip.includes("localhost") || ip.includes("127")) {
+    return;
+  }
+  const AppDataSource = await getDataSource();
+  const repo = AppDataSource.getRepository(VisitCity);
+  const res = await fetch(
+    `https://restapi.amap.com/v3/ip?ip=${ip}&output=xml&key=${process.env.AMAP_KEY}`
+  );
+
+  const text = await res.text();
+
+  await parser.parseStringPromise(text, { explicitArray: false }).then(
+    async (data: {
+      response: {
+        status: string;
+        info: string;
+        infocode: string;
+        province: string;
+        city: string;
+        adcode: string;
+        rectangle: string;
+      };
+    }) => {
+      if (data.response && data.response.city) {
+        logger.info(`[statService]: ${ip} visit from ${data.response.city}`);
+        const matchRecord = await repo.findOne({
+          where: { cityName: data.response.city },
+        });
+
+        if (matchRecord) {
+          matchRecord.count++;
+          await repo.save(matchRecord);
+        } else {
+          const newRecord = new VisitCity();
+          newRecord.cityName = data.response.city;
+          newRecord.count = 1;
+          await repo.save(newRecord);
+        }
+      }
+    }
+  );
 }

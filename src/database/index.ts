@@ -9,6 +9,7 @@ import {
   User,
   Website,
 } from "./entities";
+import { VisitCity } from "./entities/visitcity";
 
 const AppDataSource = new DataSource({
   type: "mysql",
@@ -19,7 +20,7 @@ const AppDataSource = new DataSource({
   database: "douMiBlog",
   synchronize: false,
   logging: false,
-  entities: [Archive, Article, Category, Reader, Tag, User, Website],
+  entities: [Archive, Article, Category, Reader, Tag, User, Website, VisitCity],
   subscribers: [],
   migrations: [],
 });

@@ -3,11 +3,12 @@ import "./page.css";
 import LineOrBarChart from "@/features/LineOrBarChart";
 import BlogContainer from "@/features/BlogContainer";
 import CustomBarChart from "@/features/PieChart";
+import CustomMapChart from "@/features/MapChart";
 
 const BlogData: React.FC<void> = async () => {
   const response = await fetchWebsiteStatistics();
 
-  const { visitData, archiveData, catData, tagData } = response;
+  const { visitData, archiveData, catData, tagData, visitCities } = response;
 
   const days = visitData.map((item) => item.date);
   const pvs = visitData.map((item) => item.todayPv);
@@ -97,6 +98,20 @@ const BlogData: React.FC<void> = async () => {
             top: "35%",
             align: "right",
           }}
+        />
+      </div>
+      <div className="chart-item flex-basis-100">
+        <header className="header">
+          <span>访问人群分布</span>
+          <span>VISIT PEOPLE GIS DISTRIBUTION</span>
+        </header>
+        <CustomMapChart
+          style={{
+            width: "100%",
+            height: "60.925vh",
+            marginBottom: "1.56vw",
+          }}
+          data={visitCities}
         />
       </div>
     </BlogContainer>
