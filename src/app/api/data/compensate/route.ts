@@ -23,3 +23,4 @@ export async function GET() {
     message: "success",
   });
 }
+export const dynamic = "force-dynamic";
