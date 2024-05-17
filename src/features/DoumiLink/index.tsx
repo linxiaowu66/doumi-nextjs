@@ -18,12 +18,12 @@ function DouMiLinks() {
     {
       url: "https://blogimage.5udou.cn/homePage/%E4%B9%9D%E6%BA%AA%E7%83%9F%E6%A0%91.jpg?x-oss-process=style/addWaterMarkBottom",
       title: "九溪烟树",
-      link: "/about/timeline",
+      link: "/blog/timeline",
     },
     {
       url: "https://blogimage.5udou.cn/homePage/%E8%8B%8F%E5%A0%A4.jpeg?x-oss-process=style/addWaterMarkBottom",
       title: "苏堤春晓",
-      link: "/about/cats",
+      link: "/blog/cats",
     },
     {
       url: "https://blogimage.5udou.cn/homePage/%E6%B9%98%E6%B9%96.jpg?x-oss-process=style/addWaterMarkBottom",

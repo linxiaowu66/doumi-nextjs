@@ -4,6 +4,7 @@
   font-size: 20px;
   text-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
   margin: 10px 20px 10px 0px;
+  cursor: pointer;
 }
 .count {
   font-size: 14px;
