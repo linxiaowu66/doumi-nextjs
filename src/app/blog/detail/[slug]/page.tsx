@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+// 因为图片做了防盗刷，目前没看到next/image对于追加私有Header的支持，所以换成imag
 import React from "react";
 import {
   CalendarToday,
@@ -9,7 +11,7 @@ import {
 import dayjs from "dayjs";
 import BlogContainer from "@/features/BlogContainer";
 import "progress-catalog/src/progress-catalog.css";
-import Image from "next/image";
+// import Image from "next/image";
 import "./page.css";
 import { getArticleDetail } from "@/service/article";
 import CatalogComponent from "./Catalog";
@@ -71,7 +73,7 @@ const BlogDetail: React.FC<Prop> = async (props) => {
       </section>
       <section className="micro-program">
         <h4>公众号关注一波~</h4>
-        <Image
+        <img
           src="https://blogimage.5udou.cn/homePage/%E5%85%AC%E4%BC%97%E5%8F%B7-%E7%99%BD%E8%89%B2%E7%89%88.png?x-oss-process=style/addWaterMarkBottom"
           alt="微信公众号"
           width={570}
