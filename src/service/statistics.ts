@@ -44,14 +44,15 @@ export const updateArticleStatictics = async (slug: string) => {
     if (reader) {
       if (!reader.ips.includes(reqIp)) {
         reader.ips.push(reqIp);
-        await readerRepo.save(reader);
+        await queryRunner.manager.update(Reader, reader.id, reader);
       }
     } else {
       const newReader = new Reader();
       newReader.articleSlug = slug;
       newReader.date = now;
       newReader.ips = [reqIp];
-      await readerRepo.save(newReader);
+
+      await queryRunner.manager.save(Reader, newReader);
     }
     // commit transaction now:
     await queryRunner.commitTransaction();

@@ -34,8 +34,8 @@ CREATE TABLE visitcity (
 ```
 
 ```sql
-ALTER TABLE `Article`
-ADD COLUMN `updatedTime` TIMESTAMP;
+ALTER TABLE `article`
+ADD COLUMN `updatedTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
 ```
 
 ## 开发遇到的问题
