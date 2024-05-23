@@ -44,7 +44,7 @@ const BlogDetail: React.FC<Prop> = async (props) => {
         <div className="info-item">
           <Update className="icon" />
           <span>
-            更新于 {dayjs(new Date(response.updatedAt)).format("YYYY-MM-DD")}
+            更新于 {dayjs(new Date(response.updatedTime)).format("YYYY-MM-DD")}
           </span>
         </div>
         <div className="info-item">

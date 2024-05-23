@@ -16,36 +16,51 @@ export const updateArticleStatictics = async (slug: string) => {
   const AppDataSource = await getDataSource();
   const readerRepo = AppDataSource.getRepository(Reader);
 
-  // 现根据日期查找，如果没有任何该日期的条目，就表示需要删除7天之外的数据
-  const hasTodayItems = await readerRepo.find({ where: { date: now } });
+  // create a new query runner
+  const queryRunner = AppDataSource.createQueryRunner();
 
-  if (!hasTodayItems.length) {
-    const beyond7Days = new Date().getTime() - 7 * 24 * 3600 * 1000;
-    const results = await readerRepo.find({
-      where: {
-        date: AwesomeHelp.convertDate(new Date(beyond7Days), "YYYY-MM-DD"),
-      },
-    });
-    if (results.length) {
-      await readerRepo.delete(results.map((it) => it.id));
+  // establish real database connection using our new query runner
+  await queryRunner.connect();
+
+  // lets now open a new transaction:
+  await queryRunner.startTransaction();
+
+  // acquire a lock on the row for the current date
+  let reader: Reader | null = null;
+
+  try {
+    reader = await queryRunner.manager
+      .createQueryBuilder(Reader, "reader")
+      .setLock("pessimistic_write")
+      .where("reader.date = :date", { date: now })
+      .andWhere("reader.articleSlug = :articleSlug", { articleSlug: slug })
+      .getOne();
+
+    // 避免并发操作
+    logger.info(
+      `${reqIp} visit and the record of reader is exist? ${reader?.id}`
+    );
+
+    if (reader) {
+      if (!reader.ips.includes(reqIp)) {
+        reader.ips.push(reqIp);
+        await readerRepo.save(reader);
+      }
+    } else {
+      const newReader = new Reader();
+      newReader.articleSlug = slug;
+      newReader.date = now;
+      newReader.ips = [reqIp];
+      await readerRepo.save(newReader);
     }
-  }
-
-  const reader = await readerRepo.findOne({
-    where: { date: now, articleSlug: slug },
-  });
-
-  if (reader) {
-    if (!reader.ips.includes(reqIp)) {
-      reader.ips.push(reqIp);
-      readerRepo.save(reader);
-    }
-  } else {
-    const newReader = new Reader();
-    newReader.articleSlug = slug;
-    newReader.date = now;
-    newReader.ips = [reqIp];
-    readerRepo.save(newReader);
+    // commit transaction now:
+    await queryRunner.commitTransaction();
+  } catch (err) {
+    // since we have errors let's rollback changes we made
+    await queryRunner.rollbackTransaction();
+  } finally {
+    // you need to release query runner which is manually created:
+    await queryRunner.release();
   }
 
   await updateWebsiteStatistics();
@@ -68,22 +83,26 @@ export const updateWebsiteStatistics = async () => {
   // establish real database connection using our new query runner
   await queryRunner.connect();
 
-  // now we can execute any queries on a query runner, for example:
-  const website = await queryRunner.manager.findOne(Website, {
-    where: { date: now },
-  });
-
   // lets now open a new transaction:
   await queryRunner.startTransaction();
 
-  // 避免并发操作
-  logger.info(
-    `${reqIp} visit and the record of website is exist? ${website?.id}`
-  );
-
-  let isFirstVisitToday = false;
+  // acquire a lock on the row for the current date
+  let website: Website | null = null;
 
   try {
+    website = await queryRunner.manager
+      .createQueryBuilder(Website, "website")
+      .setLock("pessimistic_write")
+      .where("website.date = :date", { date: now })
+      .getOne();
+
+    // 避免并发操作
+    logger.info(
+      `${reqIp} visit and the record of website is exist? ${website?.id}`
+    );
+
+    let isFirstVisitToday = false;
+
     if (website) {
       if (!website.todayIps.includes(reqIp)) {
         website.todayIps.push(reqIp);
@@ -110,18 +129,18 @@ export const updateWebsiteStatistics = async () => {
 
     // commit transaction now:
     await queryRunner.commitTransaction();
+
+    if (isFirstVisitToday) {
+      // 当天多次访问的同一个IP不会算进访问的区域数据里面，这样数据就不会重复出现
+      // 访问城市本质是根据访问的IP来获取的
+      await syncWithVisitCitiesData(reqIp);
+    }
   } catch (err) {
     // since we have errors let's rollback changes we made
     await queryRunner.rollbackTransaction();
   } finally {
     // you need to release query runner which is manually created:
     await queryRunner.release();
-  }
-
-  if (isFirstVisitToday) {
-    // 当天多次访问的同一个IP不会算进访问的区域数据里面，这样数据就不会重复出现
-    // 访问城市本质是根据访问的IP来获取的
-    await syncWithVisitCitiesData(reqIp);
   }
 };
 

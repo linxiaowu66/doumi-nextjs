@@ -218,6 +218,7 @@ export const createOrUpdateArticle = async (
   );
   articleIns.title = article.title;
   articleIns.author = loadUser[0];
+  articleIns.updatedTime = new Date();
 
   if (!isUpdate) {
     articleIns.slug = Date.now().toString();

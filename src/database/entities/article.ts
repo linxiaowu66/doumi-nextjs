@@ -94,6 +94,10 @@ export class Article {
   @ManyToOne("Archive", "articles")
   archiveTime: Archive;
 
+  // 文章最新更新时间
+  @Column("timestamp")
+  updatedTime: Date;
+
   // 文章的分类
   @ManyToOne("Category", "articles")
   category: Category;

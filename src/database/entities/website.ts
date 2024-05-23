@@ -22,15 +22,19 @@ export class Website {
   @Column("bigint")
   todayPv: number;
 
+  // 废弃，之前是为了计算今天和昨天的一个增长百分比
   @Column("bigint")
   yesterdayPv: number;
 
+  // 废弃
   @Column("bigint")
   yesterdayUv: number;
 
+  // 废弃，总数直接实时累加
   @Column("bigint")
   totalUv: number;
 
+  // 废弃
   @Column("bigint")
   totalPv: number;
 
