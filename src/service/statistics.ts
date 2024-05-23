@@ -2,7 +2,7 @@ import { AwesomeHelp } from "awesome-js";
 import parser from "xml2js";
 import { headers } from "next/headers";
 import { getDataSource } from "@/database";
-import { Archive, Reader, Tag, Website } from "@/database/entities";
+import { Archive, Article, Reader, Tag, Website } from "@/database/entities";
 import { logger } from "@/logger";
 import dayjs from "dayjs";
 import { MoreThanOrEqual } from "typeorm";
@@ -271,5 +271,31 @@ export async function syncWithVisitCitiesData(ip: string) {
         }
       }
     }
+  );
+}
+
+export async function getHottestArticles(inDays = 7) {
+  const AppDataSource = await getDataSource();
+  const readerRepo = AppDataSource.getRepository(Reader);
+
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - inDays);
+
+  const result = await readerRepo
+    .createQueryBuilder("reader")
+    .select(["reader.articleSlug", "reader.createdAt", "reader.ips"])
+    .addSelect(
+      'LENGTH(reader.ips) - LENGTH(REPLACE(reader.ips, ",", "")) + 1',
+      "ips_count"
+    )
+    .where("reader.createdAt >= :sevenDaysAgo", { sevenDaysAgo })
+    .orderBy("ips_count", "DESC")
+    .limit(5)
+    .getMany();
+
+  const articleRepo = AppDataSource.getRepository(Article);
+
+  return Promise.all(
+    result.map((it) => articleRepo.findOne({ where: { slug: it.articleSlug } }))
   );
 }
