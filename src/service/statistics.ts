@@ -283,15 +283,16 @@ export async function getHottestArticles(inDays = 7) {
 
   const result = await readerRepo
     .createQueryBuilder("reader")
-    .select(["reader.articleSlug", "reader.createdAt", "reader.ips"])
+    .select("reader.articleSlug", "articleSlug")
     .addSelect(
-      'LENGTH(reader.ips) - LENGTH(REPLACE(reader.ips, ",", "")) + 1',
+      'SUM(LENGTH(reader.ips) - LENGTH(REPLACE(reader.ips, ",", "")) + 1)',
       "ips_count"
     )
     .where("reader.createdAt >= :sevenDaysAgo", { sevenDaysAgo })
+    .groupBy("reader.articleSlug")
     .orderBy("ips_count", "DESC")
     .limit(5)
-    .getMany();
+    .getRawMany();
 
   const articleRepo = AppDataSource.getRepository(Article);
 
