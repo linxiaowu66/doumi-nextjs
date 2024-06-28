@@ -30,7 +30,10 @@ export default function RootLayout({
         event.preventDefault();
       }
     };
-    LA.init({id:"3IsaMGkz3DziSbD8",ck:"3IsaMGkz3DziSbD8",autoTrack:true})
+    // defer对应本地脚本无效，所以51la加载会在这个之后
+    setTimout(() => {
+      LA.init({id:"3IsaMGkz3DziSbD8",ck:"3IsaMGkz3DziSbD8",autoTrack:true})
+    }, 5000)
   `;
   return (
     <html lang="zh">
@@ -39,7 +42,7 @@ export default function RootLayout({
         src="//sdk.51.la/js-sdk-pro.min.js"
         defer
       ></script>
-      <script dangerouslySetInnerHTML={{ __html: scriptContent }} defer />
+      <script dangerouslySetInnerHTML={{ __html: scriptContent }} />
       <script
         type="text/javascript"
         async
