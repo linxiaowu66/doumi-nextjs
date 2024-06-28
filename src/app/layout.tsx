@@ -31,7 +31,7 @@ export default function RootLayout({
       }
     };
     // defer对应本地脚本无效，所以51la加载会在这个之后
-    setTimout(() => {
+    setTimeout(() => {
       LA.init({id:"3IsaMGkz3DziSbD8",ck:"3IsaMGkz3DziSbD8",autoTrack:true})
     }, 5000)
   `;
