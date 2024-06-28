@@ -30,10 +30,16 @@ export default function RootLayout({
         event.preventDefault();
       }
     };
+    LA.init({id:"3IsaMGkz3DziSbD8",ck:"3IsaMGkz3DziSbD8",autoTrack:true})
   `;
   return (
-    <html lang="en">
-      <script dangerouslySetInnerHTML={{ __html: scriptContent }} />
+    <html lang="zh">
+      <script
+        id="LA_COLLECT"
+        src="//sdk.51.la/js-sdk-pro.min.js"
+        defer
+      ></script>
+      <script dangerouslySetInnerHTML={{ __html: scriptContent }} defer />
       <script
         type="text/javascript"
         async

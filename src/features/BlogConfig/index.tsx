@@ -94,12 +94,14 @@ export default function BlogConfig(props: BlogConfigProps) {
             value={article.digest}
             fullWidth
             onChange={(e) => handleChange({ digest: e.target.value })}
-            inputProps={{ maxLength: 300 }}
-            placeholder="最多300个字符"
+            inputProps={{ maxLength: 100 }}
+            placeholder="最多300个字符或100个汉字"
             required
           />
           <FormControl className={styles.formControl} fullWidth>
-            <InputLabel id="demo-mutiple-name-label">文章标签</InputLabel>
+            <InputLabel id="demo-mutiple-name-label" required>
+              文章标签
+            </InputLabel>
             <Select
               labelId="demo-mutiple-name-label"
               id="demo-mutiple-name"
@@ -122,7 +124,9 @@ export default function BlogConfig(props: BlogConfigProps) {
             </Select>
           </FormControl>
           <FormControl className={styles.formControl} fullWidth>
-            <InputLabel id="demo-mutiple-name-label">文章分类</InputLabel>
+            <InputLabel id="demo-mutiple-name-label" required>
+              文章分类
+            </InputLabel>
             <Select
               labelId="demo-mutiple-name-label"
               id="demo-mutiple-name"
