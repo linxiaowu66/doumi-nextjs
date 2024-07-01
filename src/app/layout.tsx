@@ -33,7 +33,7 @@ export default function RootLayout({
     // defer对应本地脚本无效，所以51la加载会在这个之后
     setTimeout(() => {
       LA.init({id:"3IsaMGkz3DziSbD8",ck:"3IsaMGkz3DziSbD8",autoTrack:true})
-    }, 5000)
+    }, 5000);
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
