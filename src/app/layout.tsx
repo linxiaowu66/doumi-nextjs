@@ -48,11 +48,11 @@ export default function RootLayout({
         defer
       ></script>
       <script dangerouslySetInnerHTML={{ __html: scriptContent }} />
-      <script
+      {/* <script
         type="text/javascript"
         async
         src="https://webapi.amap.com/maps?v=2.0&key=7576f5a466e35e0df1f7d87c3110fe50&plugin=AMap.Scale,AMap.ToolBar"
-      ></script>
+      ></script> */}
       <body className={inter.className}>
         <StoreProvider>
           <NextAuthProvider>
